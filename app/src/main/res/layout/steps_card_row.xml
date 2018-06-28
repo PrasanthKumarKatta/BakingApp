@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/recipes_cardview"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.CardView
+        style="@style/recipes_cardview"
+        android:layout_margin="5dp"
+        app:cardCornerRadius="5dp">
+
+        <TextView
+            android:id="@+id/textview_steps"
+            style="@style/recipes_cardview"
+            android:text="Steps"
+            android:textSize="25sp"
+            android:paddingLeft="20dp"
+            />
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>
