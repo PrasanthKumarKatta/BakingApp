@@ -18,9 +18,21 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RecipseDetailsActivity"
-            android:parentActivityName=".RecipesMainActivity">
+        <activity android:name=".IngredientsListActivity" android:parentActivityName=".ItemListActivity"/>
+        <activity
+            android:name=".ItemListActivity"
+            android:label="@string/title_item_list"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ItemDetailActivity"
+            android:label="@string/title_item_detail"
+            android:parentActivityName=".ItemListActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.kpcode4u.prasanthkumar.bakingapp.ItemListActivity" />
         </activity>
+        <activity android:name=".ExoPlayerActivity"></activity>
     </application>
 
 </manifest>

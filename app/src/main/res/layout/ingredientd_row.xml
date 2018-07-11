@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    style="@style/recipes_cardview"
+    android:layout_margin="5dp"
+    app:cardCornerRadius="5dp"
+    android:background="#22ef48"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+    <LinearLayout
+        style="@style/recipes_cardview"
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:id="@+id/textview_ingredients"
+            style="@style/recipes_cardview"
+            android:text="Steps"
+            android:textSize="20sp"
+            android:padding="20dp"
+            android:layout_gravity="center"
+            android:textStyle="bold"
+            android:paddingLeft="20dp"
+            />
+        <TextView
+            android:id="@+id/textview_mesurement"
+            style="@style/recipes_cardview"
+            android:text="Steps"
+            android:textSize="20sp"
+            android:padding="20dp"
+            android:layout_gravity="center"
+            android:textStyle="bold"
+            android:paddingLeft="20dp"
+            />
+        <TextView
+            android:id="@+id/textview_quantity"
+            style="@style/recipes_cardview"
+            android:text="Steps"
+            android:textSize="20sp"
+            android:padding="20dp"
+            android:layout_gravity="center"
+            android:textStyle="bold"
+            android:paddingLeft="20dp"
+            />
+    </LinearLayout>
+</android.support.v7.widget.CardView>
+

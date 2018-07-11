@@ -3,11 +3,13 @@ package com.kpcode4u.prasanthkumar.bakingapp;
 import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -35,7 +37,7 @@ public class RecipesMainActivity extends AppCompatActivity {
     SwipeRefreshLayout swipeRefreshLayout;
 
     private RecipeAdapter recipeAdapter;
-    private List<RecipesResponse> recipesList = new ArrayList<>();
+    private ArrayList<RecipesResponse> recipesList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,9 +61,12 @@ public class RecipesMainActivity extends AppCompatActivity {
 
     private void initViews() {
 
-        recipesList = new ArrayList<>();
         recipeAdapter = new RecipeAdapter(this,recipesList);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        if (getActivity().getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
+            recyclerView.setLayoutManager(new GridLayoutManager(this,1));
+        } else {
+            recyclerView.setLayoutManager(new GridLayoutManager(this,2));
+        }
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.addItemDecoration(new DividerItemDecoration(this,LinearLayoutManager.VERTICAL));
         recyclerView.setAdapter(recipeAdapter);
@@ -93,21 +98,7 @@ public class RecipesMainActivity extends AppCompatActivity {
                     //List<RecipesResponse> responseList = response;
 
                     List<RecipesResponse> recipesList = response.body();
-                  //  Toast.makeText(RecipesMainActivity.this, "name:"+recipesList.get(0)+"\n", Toast.LENGTH_SHORT).show();
-                    for (RecipesResponse recipe: recipesList){
-
-                        List<Steps> stepsList = recipe.getSteps();
-                        for (Steps steps: stepsList)
-                        {
-                        //    Toast.makeText(RecipesMainActivity.this, "des"+steps.getDescription()+"\n", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-
-                  /*  Toast.makeText(RecipesMainActivity.this, ""+recipesList.toString(), Toast.LENGTH_SHORT).show();
-                    Log.d("response",recipesList.toString());
-                  */
-
-                     recyclerView.setAdapter(new RecipeAdapter(getApplicationContext(),recipesList));
+                    recyclerView.setAdapter(new RecipeAdapter(getApplicationContext(), (ArrayList<RecipesResponse>) recipesList));
 
                     if (swipeRefreshLayout.isRefreshing()){
                         swipeRefreshLayout.setRefreshing(false);

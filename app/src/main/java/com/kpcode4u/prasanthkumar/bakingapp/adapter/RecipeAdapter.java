@@ -10,9 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.kpcode4u.prasanthkumar.bakingapp.ItemListActivity;
 import com.kpcode4u.prasanthkumar.bakingapp.Listeners.ItemClickListener;
 import com.kpcode4u.prasanthkumar.bakingapp.R;
-import com.kpcode4u.prasanthkumar.bakingapp.RecipseDetailsActivity;
 import com.kpcode4u.prasanthkumar.bakingapp.model.Ingredients;
 import com.kpcode4u.prasanthkumar.bakingapp.model.RecipesResponse;
 
@@ -58,46 +58,6 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipesInf
 */
     }
 
-    private void passDataToDetailsActivity(RecipesResponse clickedIndexRecipe) {
-            Bundle selectedRecipseBundle = new Bundle();
-            ArrayList<RecipesResponse> selectedRecipse =new ArrayList<>();
-            selectedRecipse.add(clickedIndexRecipe);
-            selectedRecipseBundle.putParcelableArrayList(SELECTED_RECIPSE_key, selectedRecipse);
-
-
-            Intent intent = new Intent(context, RecipseDetailsActivity.class);
-            intent.putParcelableArrayListExtra("responseKey",selectedRecipse);
-            intent.addFlags(intent.FLAG_ACTIVITY_NEW_TASK);
-            context.startActivity(intent);
-
-         //   List<Steps> stepsList = new ArrayList<>();
-           // Steps steps = stepsList.get(pos);
-/*         Intent i = new Intent(context, RecipseDetailsActivity.class);
-            i.putExtra("cakeTitle",recipesList.get(pos).getName());
-   *//*
-        */
-/* i.putExtra("shortDescription",steps.getShortDescription());
-            i.putExtra("description",steps.getDescription());
-            i.putExtra("videoURL",steps.getVideoURL());
-           *//*
-
-     //       i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-       //     context.startActivity(i);
-    }
-  */
-    }
-
-    private void passToDetails(int pos) {
-        if (pos !=RecyclerView.NO_POSITION){
-            RecipesResponse selectedRcipe = recipesList.get(pos);
-
-            Intent i = new Intent(context, RecipseDetailsActivity.class);
-            i.putExtra("titleKey",selectedRcipe.getName());
-            i.putExtra("ingredients", (Parcelable) selectedRcipe.getIngredients());
-            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            context.startActivity(i);
-        }
-    }
 
     @Override
     public int getItemCount() {
@@ -124,14 +84,19 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipesInf
                     int pos = getAdapterPosition();
                     if (pos != RecyclerView.NO_POSITION){
 
-                        Intent intent = new Intent(context, RecipseDetailsActivity.class);
+                       // Intent intent = new Intent(context, RecipseDetailsActivity.class);
+                        Intent intent = new Intent(context, ItemListActivity.class);
+
                         Bundle bundle = new Bundle();
                         bundle.putInt("position",pos);
 
                         bundle.putInt("id",recipesList.get(pos).getId());
+                        bundle.putString("titlekey",recipesList.get(pos).getName());
                         bundle.putInt("Servings",recipesList.get(pos).getServings());
+
                         intent.putParcelableArrayListExtra("StepsKey",recipesList.get(pos).getSteps());
                         intent.putParcelableArrayListExtra("IngredientsKey",recipesList.get(pos).getIngredients());
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         context.startActivity(intent);
 
                     }
