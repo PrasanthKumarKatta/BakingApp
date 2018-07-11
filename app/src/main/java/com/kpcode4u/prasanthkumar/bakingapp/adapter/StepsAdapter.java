@@ -82,8 +82,8 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsInfo> {
                                 .commit();
                     } else {
                         Context context = v.getContext();
-                        Intent i = new Intent(context, ExoPlayerActivity.class);
-                        //Intent i = new Intent(context, ItemDetailActivity.class);
+                        //Intent i = new Intent(context, ExoPlayerActivity.class);
+                        Intent i = new Intent(context, ItemDetailActivity.class);
                         i.putParcelableArrayListExtra("stepsList",stepsList);
                         i.putExtra("position",pos);
                         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

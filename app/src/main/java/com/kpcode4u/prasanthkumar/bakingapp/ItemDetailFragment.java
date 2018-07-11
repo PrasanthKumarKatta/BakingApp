@@ -9,6 +9,9 @@ import android.net.Uri;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,10 +33,15 @@ import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.google.android.exoplayer2.upstream.BandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
+import com.kpcode4u.prasanthkumar.bakingapp.adapter.Ingredientsadapter;
+import com.kpcode4u.prasanthkumar.bakingapp.model.Ingredients;
 import com.kpcode4u.prasanthkumar.bakingapp.model.Steps;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * A fragment representing a single Item detail screen.
@@ -70,8 +78,12 @@ public class ItemDetailFragment extends Fragment {
     private int vId, totalVideoSteps;
 
     private ArrayList<Steps> stepsVideoList;
+    private ArrayList<Ingredients> ingredientsList;
     int position;
     private long videoPosition;
+
+    @BindView(R.id.ingredients_Recyclerview) RecyclerView mRecyclerView;
+    private Ingredientsadapter ingredientsadapter;
 
 
     @Override
@@ -85,95 +97,111 @@ public class ItemDetailFragment extends Fragment {
             // mItem = DummyContent.ITEM_MAP.get(getArguments().getString(ARG_ITEM_ID));
 
             Activity activity = this.getActivity();
-            CollapsingToolbarLayout appBarLayout = (CollapsingToolbarLayout) activity.findViewById(R.id.toolbar_layout);
-            if (appBarLayout != null) {
+         //   CollapsingToolbarLayout appBarLayout = (CollapsingToolbarLayout) activity.findViewById(R.id.toolbar_layout);
+         /*   if (appBarLayout != null) {
                 //appBarLayout.setTitle(mItem.content);
             }
+          */
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.item_detail, container, false);
+        View rootView;
 
-        stepsVideoList = new ArrayList<>();
+            if (ingredientsList != null){
+                rootView = inflater.inflate(R.layout.activity_ingredients_list,container,false);
+                ButterKnife.bind(this,rootView);
 
-        exoPlayerView = rootView.findViewById(R.id.simpleExoPlayerView);
-        descriptionTv = rootView.findViewById(R.id.stepDescription);
-        totalSteps = rootView.findViewById(R.id.total_steps);
-        previous = rootView.findViewById(R.id.previousVideoStep);
-        next = rootView.findViewById(R.id.nextVideoStep);
+                ingredientsList = new ArrayList<>();
 
+                ingredientsList = getArguments().getParcelableArrayList("ingredientsList");
+                position = getArguments().getInt("position");
+                ingredientsadapter = new Ingredientsadapter(getContext(),ingredientsList);
+                mRecyclerView.setAdapter(ingredientsadapter);
+                mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL));
+                mRecyclerView.scrollToPosition(position);
+                ingredientsadapter.notifyDataSetChanged();
 
-        // Show the dummy content as text in a TextView.
-      /*  if (mItem != null) {
-            ((TextView) rootView.findViewById(R.id.item_detail)).setText(mItem.details);
-        }*/
+            } else {
+                rootView = inflater.inflate(R.layout.item_detail, container, false);
 
-  /*
-        if (savedInstanceState == null) {
+                stepsVideoList = new ArrayList<>();
+
+                exoPlayerView = rootView.findViewById(R.id.simpleExoPlayerView);
+                descriptionTv = rootView.findViewById(R.id.stepDescription);
+                totalSteps = rootView.findViewById(R.id.total_steps);
+                previous = rootView.findViewById(R.id.previousVideoStep);
+                next = rootView.findViewById(R.id.nextVideoStep);
+
+   /*     if (savedInstanceState == null) {
             // Create the detail fragment and add it to the activity
             // using a fragment transaction.
             position = savedInstanceState.getInt("stepPosition");
             videoPosition = savedInstanceState.getLong("videoPosition");
         }
 */
-        stepsVideoList = getArguments().getParcelableArrayList("stepsList");
-        position = getArguments().getInt("position");
-        videoURL = stepsVideoList.get(position).getVideoURL();
-        description = stepsVideoList.get(position).getDescription();
-        descriptionTv.setText(description);
-        vId = stepsVideoList.get(position).getId();
-        totalVideoSteps = stepsVideoList.size();
-        totalSteps.setText(vId + "/" + totalVideoSteps);
-        callexoplayer();
-        previous.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (position >= 1) {
-                    videoURL = stepsVideoList.get(position).getVideoURL();
-                    description = stepsVideoList.get(position).getDescription();
-                    descriptionTv.setText(description);
-                    callexoplayer();
-                    exoPlayer.seekTo(0);
-                    vId = stepsVideoList.get(position).getId();
-                    totalVideoSteps = stepsVideoList.size();
-                    totalSteps.setText(vId + "/" + totalVideoSteps);
+                stepsVideoList = getArguments().getParcelableArrayList("stepsList");
+                position = getArguments().getInt("position");
+                videoURL = stepsVideoList.get(position).getVideoURL();
+                description = stepsVideoList.get(position).getDescription();
+                descriptionTv.setText(description);
+                vId = stepsVideoList.get(position).getId();
+                totalVideoSteps = stepsVideoList.size();
+                totalSteps.setText(vId + "/" + totalVideoSteps);
+                callexoplayer();
+                previous.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (position >= 1) {
+                            videoURL = stepsVideoList.get(position).getVideoURL();
+                            description = stepsVideoList.get(position).getDescription();
+                            descriptionTv.setText(description);
+                            callexoplayer();
+                            exoPlayer.seekTo(0);
+                            vId = stepsVideoList.get(position).getId();
+                            totalVideoSteps = stepsVideoList.size();
+                            totalSteps.setText(vId + "/" + totalVideoSteps);
 
-                } else {
-                    Toast.makeText(getActivity(), "This is the First Step", Toast.LENGTH_SHORT).show();
-                }
+                        } else {
+                            Toast.makeText(getActivity(), "This is the First Step", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                });
+
+                next.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (position == stepsVideoList.size() - 1){
+                            Toast.makeText(getActivity(), "This is the Last Step", Toast.LENGTH_SHORT).show();
+                        } else {
+                            position++;
+                            videoURL = stepsVideoList.get(position).getVideoURL();
+                            description = stepsVideoList.get(position).getDescription();
+                            descriptionTv.setText(description);
+                            callexoplayer();
+                            exoPlayer.seekTo(0);
+
+                            vId = stepsVideoList.get(position).getId();
+                            totalVideoSteps = stepsVideoList.size();
+                            totalSteps.setText(vId + "/" + totalVideoSteps);
+
+                        }
+                    }
+                });
 
             }
-        });
 
-        next.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (position == stepsVideoList.size() - 1){
-                    Toast.makeText(getActivity(), "This is the Last Step", Toast.LENGTH_SHORT).show();
-                } else {
-                    position++;
-                    videoURL = stepsVideoList.get(position).getVideoURL();
-                    description = stepsVideoList.get(position).getDescription();
-                    descriptionTv.setText(description);
-                    callexoplayer();
-                    exoPlayer.seekTo(0);
 
-                    vId = stepsVideoList.get(position).getId();
-                    totalVideoSteps = stepsVideoList.size();
-                    totalSteps.setText(vId + "/" + totalVideoSteps);
-
-                }
-            }
-        });
-
-        return rootView;
+              return rootView;
     }
 
     private void callexoplayer() {
         try {
+
                 if (videoURL.equals("")){
                     Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.recipes);
                     exoPlayerView.setDefaultArtwork(bitmap);

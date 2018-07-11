@@ -141,7 +141,9 @@ public class ItemListActivity extends AppCompatActivity {
                 public void onClick(View v) {
 
                     //    ingredientsList = new ArrayList<>();
-                    Intent intent = new Intent(ItemListActivity.this,IngredientsListActivity.class);
+                  //  Intent intent = new Intent(ItemListActivity.this,IngredientsListActivity.class);
+                    Intent intent = new Intent(ItemListActivity.this,ItemDetailActivity.class);
+
                     //  Bundle bundle = new Bundle();
                     intent.putParcelableArrayListExtra("IngredientsKey",ingredientsList);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

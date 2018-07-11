@@ -1,6 +1,10 @@
 package com.kpcode4u.prasanthkumar.bakingapp;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -27,6 +31,7 @@ import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.google.android.exoplayer2.upstream.BandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
+import com.kpcode4u.prasanthkumar.bakingapp.model.Ingredients;
 import com.kpcode4u.prasanthkumar.bakingapp.model.Steps;
 
 import java.util.ArrayList;
@@ -41,6 +46,7 @@ import java.util.List;
 public class ItemDetailActivity extends AppCompatActivity {
 
   private ArrayList<Steps> stepsVideoList;
+  private ArrayList<Ingredients> ingredientsList;
   private int position;
 
     @Override
@@ -49,32 +55,58 @@ public class ItemDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_item_detail);
 
         stepsVideoList = new ArrayList<>();
+        ingredientsList = new ArrayList<>();
+
+        /*
         Toolbar toolbar = (Toolbar) findViewById(R.id.detail_toolbar);
         setSupportActionBar(toolbar);
+        */
         // Show the Up button in the action bar.
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
+
+
+
         if (savedInstanceState == null) {
             // Create the detail fragment and add it to the activity
             // using a fragment transaction.
 
             stepsVideoList = getIntent().getParcelableArrayListExtra("stepsList");
+            ingredientsList = getIntent().getParcelableArrayListExtra("IngredientsKey");
             position = getIntent().getExtras().getInt("position");
             Bundle arguments = new Bundle();
             arguments.putParcelableArrayList("stepsList",stepsVideoList);
+            arguments.putParcelableArrayList("ingredientsList",ingredientsList);
             arguments.putInt("position",position);
 
 
             ItemDetailFragment fragment = new ItemDetailFragment();
             fragment.setArguments(arguments);
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.item_detail_container, fragment)
-                    .commit();
+            if (getActivity().getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.item_detail_container, fragment)
+                        .commit();
+            } else {
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.item_detail_container, fragment)
+                        .commit();
+            }
         }
 
+    }
+    public Activity getActivity() {
+        Context context = this;
+        while (context instanceof ContextWrapper){
+            if (context instanceof Activity){
+                return (Activity) context;
+            }
+            context = ((ContextWrapper) context).getBaseContext();
+        }
+        return null;
     }
 
     @Override

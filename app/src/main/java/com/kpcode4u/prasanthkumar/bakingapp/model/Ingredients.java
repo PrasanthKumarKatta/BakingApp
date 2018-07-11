@@ -52,7 +52,7 @@ public class Ingredients  implements Parcelable {
         }
     };
 
-    public Double getQuantity() {
+    public CharSequence getQuantity() {
         return quantity;
     }
 
