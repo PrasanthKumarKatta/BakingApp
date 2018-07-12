@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.kpcode4u.prasanthkumar.bakingapp.ItemListActivity;
-import com.kpcode4u.prasanthkumar.bakingapp.Listeners.ItemClickListener;
 import com.kpcode4u.prasanthkumar.bakingapp.R;
 import com.kpcode4u.prasanthkumar.bakingapp.model.Ingredients;
 import com.kpcode4u.prasanthkumar.bakingapp.model.RecipesResponse;
@@ -71,9 +70,6 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipesInf
 
         @BindView(R.id.recipe_title_id) TextView recipeTitle;
 
-       ItemClickListener itemClickListener;
-        //BakingItemClikListner bakingItemClikListner;
-
         public RecipesInfo(View itemView) {
             super(itemView);
             ButterKnife.bind(this,itemView);
@@ -91,7 +87,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipesInf
                         bundle.putInt("position",pos);
 
                         bundle.putInt("id",recipesList.get(pos).getId());
-                        bundle.putString("titlekey",recipesList.get(pos).getName());
+                        intent.putExtra("titlekey",recipesList.get(pos).getName());
                         bundle.putInt("Servings",recipesList.get(pos).getServings());
 
                         intent.putParcelableArrayListExtra("StepsKey",recipesList.get(pos).getSteps());
@@ -103,19 +99,6 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipesInf
                 }
             });
         }
-
-       /*
-        @Override
-        public void onClick(View v) {
-            int clickedPosition = getAdapterPosition();
-           itemClickListener.onItemClickListener(recipesList.get(clickedPosition));
-         //   this.bakingItemClikListner.onItemClick(getLayoutPosition());
-        }
-        public void setItemClickListener(ItemClickListener itemClickListener){
-            this.itemClickListener = itemClickListener;
-        }
-        */
-
 
     }
 }

@@ -48,6 +48,7 @@ public class ItemListActivity extends AppCompatActivity {
     private static final String shortdescription_key = "shortDescription";
     private static final String description_key = "description";
     private static final String videoURL_key = "videoURL";
+    private static final String SAVED_LAYOUT_MANAGER = "SavedLayoutManager" ;
 
     private String SELECTED_RECIPSE_key = "selectedRecipe";
 
@@ -55,7 +56,7 @@ public class ItemListActivity extends AppCompatActivity {
 //    @BindView(R.id.recyclerView_Steps) RecyclerView recyclerView;
 
     private StepsAdapter stepsAdapter;
-    private ArrayList<RecipesResponse> recipe;
+    private ArrayList<RecipesResponse> recipeList;
     private ArrayList<Steps> stepsList;
     private ArrayList<Ingredients> ingredientsList;
     private int position;
@@ -67,7 +68,7 @@ public class ItemListActivity extends AppCompatActivity {
     private boolean mTwoPane;
     Toolbar toolbar;
     private ItemListActivity context;
-    @BindView(R.id.item_list) View recyclerView;
+    @BindView(R.id.item_list) RecyclerView recyclerView;
 
 
     @Override
@@ -77,7 +78,6 @@ public class ItemListActivity extends AppCompatActivity {
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
 
         if (findViewById(R.id.item_detail_container) != null) {
             // The detail container view will be present only in the
@@ -98,7 +98,7 @@ public class ItemListActivity extends AppCompatActivity {
 
        // View recyclerView = findViewById(R.id.item_list);
         assert recyclerView != null;
-        setupRecyclerView((RecyclerView) recyclerView);
+        setupRecyclerView(recyclerView);
     }
 
    /* private void initViews() {
@@ -123,16 +123,14 @@ public class ItemListActivity extends AppCompatActivity {
         Bundle bundle=getIntent().getExtras();
         if (bundle!=null) {
 
-            recipeName = bundle.getString("titlekey");
            // setTitle(recipeName);
-            toolbar.setTitle("");
-
+            toolbar.setTitle(""+bundle.getString("titlekey"));
 
             stepsList = bundle.getParcelableArrayList("StepsKey");
 
-            String step = stepsList.get(0).getShortDescription();
+          /*  String step = stepsList.get(0).getShortDescription();
             Toast.makeText(this, "steps"+step, Toast.LENGTH_SHORT).show();
-
+*/
             ingredientsList = bundle.getParcelableArrayList("IngredientsKey");
 
 
@@ -141,18 +139,19 @@ public class ItemListActivity extends AppCompatActivity {
                 public void onClick(View v) {
 
                     //    ingredientsList = new ArrayList<>();
-                  //  Intent intent = new Intent(ItemListActivity.this,IngredientsListActivity.class);
-                    Intent intent = new Intent(ItemListActivity.this,ItemDetailActivity.class);
+                    Intent intent = new Intent(ItemListActivity.this,IngredientsListActivity.class);
+
+                 //   Intent intent = new Intent(ItemListActivity.this,ItemDetailActivity.class);
 
                     //  Bundle bundle = new Bundle();
                     intent.putParcelableArrayListExtra("IngredientsKey",ingredientsList);
+                    intent.putParcelableArrayListExtra("StepsKey",stepsList);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent);
-                    
-                    
-                    if (mTwoPane) {
+                    startActivityForResult(intent,1);
+
+                 /*   if (mTwoPane) {
                         Bundle arguments = new Bundle();
-                        arguments.putParcelableArrayList("stepsList", stepsList);
+                        arguments.putParcelableArrayList("ingredientsList", ingredientsList);
                         arguments.putInt("position",position);
                         ItemDetailFragment fragment = new ItemDetailFragment();
                         fragment.setArguments(arguments);
@@ -161,24 +160,47 @@ public class ItemListActivity extends AppCompatActivity {
                                 .commit();
                     } else {
                         Context context = v.getContext();
-                        Intent i = new Intent(context, ExoPlayerActivity.class);
-                        //Intent i = new Intent(context, ItemDetailActivity.class);
-                        i.putParcelableArrayListExtra("stepsList",stepsList);
+                       // Intent i = new Intent(context, ExoPlayerActivity.class);
+                        Intent i = new Intent(context, ItemDetailActivity.class);
+                        i.putParcelableArrayListExtra("ingredientsList",ingredientsList);
                         i.putExtra("position",position);
                         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         context.startActivity(i);
-                        Toast.makeText(context, "StepsAdapter to ExoPlayer", Toast.LENGTH_SHORT).show();
-                    }
+                        Toast.makeText(context, "ingredientsActivity masterdetails", Toast.LENGTH_SHORT).show();
+                    }*/
                     
                 }
             });
 
-           // initViews();
+            addToWidget();
         }
 
     }
+
+    private void addToWidget() {
+
+        Intent broadCastIntent = new Intent(getApplicationContext(),BakingWidget.class);
+        broadCastIntent.setAction("android.appwidget.action.APPWIDGET_UPDATE");
+        broadCastIntent.putExtra("ingredients",ingredientsList);
+        broadCastIntent.putExtra("recipeNames",recipeName);
+        getApplicationContext().sendBroadcast(broadCastIntent);
+
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent i = new Intent();
+        i.putParcelableArrayListExtra("StepsKey",getIntent().getExtras().getParcelableArrayList("StepsKey"));
+        i.putParcelableArrayListExtra("IngredientsKey",getIntent().getExtras().getParcelableArrayList("IngredientsKey"));
+        setResult(RESULT_OK, i);
+        finish();
+    }
+
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
         recyclerView.setAdapter(new StepsAdapter(ItemListActivity.this, stepsList, mTwoPane));
+        recyclerView.scrollToPosition(position);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
@@ -193,82 +215,42 @@ public class ItemListActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         getRecipseSteps();
-        setupRecyclerView((RecyclerView) recyclerView);
+        setupRecyclerView( recyclerView);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         getRecipseSteps();
-        setupRecyclerView((RecyclerView) recyclerView);
+        setupRecyclerView( recyclerView);
     }
 
-    /* public static class SimpleItemRecyclerViewAdapter
-            extends RecyclerView.Adapter<SimpleItemRecyclerViewAdapter.ViewHolder> {
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        position = ((LinearLayoutManager)recyclerView.getLayoutManager()).findFirstVisibleItemPosition();
+        outState.putInt(SAVED_LAYOUT_MANAGER, position);
 
-        private final ItemListActivity mParentActivity;
-        private final List<DummyContent.DummyItem> mValues;
-        private final boolean mTwoPane;
-        private final View.OnClickListener mOnClickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DummyContent.DummyItem item = (DummyContent.DummyItem) view.getTag();
-                if (mTwoPane) {
-                    Bundle arguments = new Bundle();
-                    arguments.putString(ItemDetailFragment.ARG_ITEM_ID, item.id);
-                    ItemDetailFragment fragment = new ItemDetailFragment();
-                    fragment.setArguments(arguments);
-                    mParentActivity.getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.item_detail_container, fragment)
-                            .commit();
-                } else {
-                    Context context = view.getContext();
-                    Intent intent = new Intent(context, ItemDetailActivity.class);
-                    intent.putExtra(ItemDetailFragment.ARG_ITEM_ID, item.id);
+     /*    outState.putString("title",recipeList.get(position).getName());
+         outState.putParcelableArrayList("ingredientsList",ingredientsList);
+         outState.putParcelableArrayList("stepsKey",stepsList);
+         outState.putBoolean("mTwo",mTwoPane);
+     */
+    }
 
-                    context.startActivity(intent);
-                }
-            }
-        };
-
-        SimpleItemRecyclerViewAdapter(ItemListActivity parent,
-                                      List<DummyContent.DummyItem> items,
-                                      boolean twoPane) {
-            mValues = items;
-            mParentActivity = parent;
-            mTwoPane = twoPane;
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        if (savedInstanceState != null){
+            position = savedInstanceState.getInt(SAVED_LAYOUT_MANAGER);
         }
+        super.onRestoreInstanceState(savedInstanceState);
 
-        @Override
-        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.item_list_content, parent, false);
-            return new ViewHolder(view);
-        }
+        /*  recipeName = savedInstanceState.getString("title");
+           ingredientsList = savedInstanceState.getParcelableArrayList("ingredientsList");
+           stepsList = savedInstanceState.getParcelableArrayList("stepsKey");
+           mTwoPane = savedInstanceState.getBoolean("mTwo");
+        */
+    }
 
-        @Override
-        public void onBindViewHolder(final ViewHolder holder, int position) {
-            holder.mIdView.setText(mValues.get(position).id);
-            holder.mContentView.setText(mValues.get(position).content);
 
-            holder.itemView.setTag(mValues.get(position));
-            holder.itemView.setOnClickListener(mOnClickListener);
-        }
-
-        @Override
-        public int getItemCount() {
-            return mValues.size();
-        }
-
-        class ViewHolder extends RecyclerView.ViewHolder {
-            final TextView mIdView;
-            final TextView mContentView;
-
-            ViewHolder(View view) {
-                super(view);
-                mIdView = (TextView) view.findViewById(R.id.id_text);
-                mContentView = (TextView) view.findViewById(R.id.content);
-            }
-        }
-    }*/
 }

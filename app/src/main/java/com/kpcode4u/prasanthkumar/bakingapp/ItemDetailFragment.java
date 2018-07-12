@@ -109,14 +109,15 @@ public class ItemDetailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView;
+        ingredientsList = new ArrayList<>();
 
-            if (ingredientsList != null){
+        ingredientsList = getArguments().getParcelableArrayList("ingredientsList");
+
+        if (ingredientsList != null){
                 rootView = inflater.inflate(R.layout.activity_ingredients_list,container,false);
                 ButterKnife.bind(this,rootView);
 
-                ingredientsList = new ArrayList<>();
-
-                ingredientsList = getArguments().getParcelableArrayList("ingredientsList");
+               Toast.makeText(getActivity(), "ingredients : "+ingredientsList.get(position).getIngredient(), Toast.LENGTH_SHORT).show();
                 position = getArguments().getInt("position");
                 ingredientsadapter = new Ingredientsadapter(getContext(),ingredientsList);
                 mRecyclerView.setAdapter(ingredientsadapter);
@@ -149,20 +150,21 @@ public class ItemDetailFragment extends Fragment {
                 description = stepsVideoList.get(position).getDescription();
                 descriptionTv.setText(description);
                 vId = stepsVideoList.get(position).getId();
-                totalVideoSteps = stepsVideoList.size();
+                totalVideoSteps = stepsVideoList.size()-1;
                 totalSteps.setText(vId + "/" + totalVideoSteps);
                 callexoplayer();
                 previous.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         if (position >= 1) {
+                            position--;
                             videoURL = stepsVideoList.get(position).getVideoURL();
                             description = stepsVideoList.get(position).getDescription();
                             descriptionTv.setText(description);
                             callexoplayer();
                             exoPlayer.seekTo(0);
                             vId = stepsVideoList.get(position).getId();
-                            totalVideoSteps = stepsVideoList.size();
+                            totalVideoSteps = stepsVideoList.size()-1;
                             totalSteps.setText(vId + "/" + totalVideoSteps);
 
                         } else {
@@ -186,7 +188,7 @@ public class ItemDetailFragment extends Fragment {
                             exoPlayer.seekTo(0);
 
                             vId = stepsVideoList.get(position).getId();
-                            totalVideoSteps = stepsVideoList.size();
+                            totalVideoSteps = stepsVideoList.size()-1;
                             totalSteps.setText(vId + "/" + totalVideoSteps);
 
                         }
@@ -232,9 +234,41 @@ public class ItemDetailFragment extends Fragment {
     }
 
     @Override
+    public void onStop() {
+        super.onStop();
+        releasePlayer();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        releasePlayer();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        callexoplayer();
+    }
+
+
+    /*
+    * Release Player
+    */
+
+    private void releasePlayer() {
+        if (exoPlayer !=null){
+            exoPlayer.stop();
+            exoPlayer.release();
+            exoPlayer = null;
+        }
+    }
+
+    @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt("stepPosition", position);
         outState.putLong("videoPosition", exoPlayer.getCurrentPosition());
     }
+
 }

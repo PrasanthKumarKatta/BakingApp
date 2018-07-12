@@ -25,6 +25,7 @@
         </activity>
         <activity
             android:name=".ItemListActivity"
+            android:launchMode="singleTop"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -32,17 +33,22 @@
         </activity>
         <activity
             android:name=".ItemDetailActivity"
+            android:launchMode="singleTop"
             android:parentActivityName=".ItemListActivity"
             android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.kpcode4u.prasanthkumar.bakingapp.ItemListActivity" />
         </activity>
-        <activity android:name=".ExoPlayerActivity" />
+        <activity
+            android:name=".ExoPlayerActivity"
+            android:launchMode="singleTop" />
 
         <receiver android:name=".BakingWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="com.kpcode4u.prasanthkumar.bakingapp.BAKING"/>
+
             </intent-filter>
 
             <meta-data
@@ -53,7 +59,10 @@
         <service
             android:name=".service.MyWidgetRemoteViewService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true"
+            android:permission="android.permission.BIND_REMOTEVIEWS">
+
+        </service>
     </application>
 
 </manifest>

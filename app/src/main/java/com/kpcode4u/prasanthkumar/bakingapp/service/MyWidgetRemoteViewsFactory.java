@@ -58,7 +58,7 @@ public class MyWidgetRemoteViewsFactory implements RemoteViewsService.RemoteView
         RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.ingredientd_row);
         remoteViews.setTextViewText(R.id.textview_ingredients,ingredientsList.get(position).getIngredient());
         remoteViews.setTextViewText(R.id.textview_mesurement, ingredientsList.get(position).getMeasure());
-        remoteViews.setTextViewText(R.id.textview_quantity, ingredientsList.get(position).getQuantity());
+        remoteViews.setTextViewText(R.id.textview_quantity, (String.valueOf(ingredientsList.get(position).getQuantity())));
 
         return remoteViews;
     }

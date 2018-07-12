@@ -32,12 +32,14 @@ import retrofit2.Response;
 
 public class RecipesMainActivity extends AppCompatActivity {
 
+    private static final String SAVED_LAYOUT_MANAGER = "SavedLayoutManager" ;
     @BindView(R.id.recyclerview_Recipe) RecyclerView recyclerView;
     @BindView(R.id.mainContent_swipeRef)
     SwipeRefreshLayout swipeRefreshLayout;
 
     private RecipeAdapter recipeAdapter;
     private ArrayList<RecipesResponse> recipesList = new ArrayList<>();
+    private int position;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,7 +101,7 @@ public class RecipesMainActivity extends AppCompatActivity {
 
                     List<RecipesResponse> recipesList = response.body();
                     recyclerView.setAdapter(new RecipeAdapter(getApplicationContext(), (ArrayList<RecipesResponse>) recipesList));
-
+                    recyclerView.scrollToPosition(position);
                     if (swipeRefreshLayout.isRefreshing()){
                         swipeRefreshLayout.setRefreshing(false);
                     }
@@ -131,4 +133,22 @@ public class RecipesMainActivity extends AppCompatActivity {
         getRecipses();
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        position = ((GridLayoutManager)recyclerView.getLayoutManager()).findFirstVisibleItemPosition();
+        outState.putInt(SAVED_LAYOUT_MANAGER, position);
+
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+
+        if (savedInstanceState != null){
+            position = savedInstanceState.getInt(SAVED_LAYOUT_MANAGER);
+        }
+        super.onRestoreInstanceState(savedInstanceState);
+
+    }
 }

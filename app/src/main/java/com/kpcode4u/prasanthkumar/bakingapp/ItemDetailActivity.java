@@ -75,7 +75,7 @@ public class ItemDetailActivity extends AppCompatActivity {
             // using a fragment transaction.
 
             stepsVideoList = getIntent().getParcelableArrayListExtra("stepsList");
-            ingredientsList = getIntent().getParcelableArrayListExtra("IngredientsKey");
+            ingredientsList = getIntent().getParcelableArrayListExtra("ingredientsList");
             position = getIntent().getExtras().getInt("position");
             Bundle arguments = new Bundle();
             arguments.putParcelableArrayList("stepsList",stepsVideoList);
@@ -85,16 +85,9 @@ public class ItemDetailActivity extends AppCompatActivity {
 
             ItemDetailFragment fragment = new ItemDetailFragment();
             fragment.setArguments(arguments);
-            if (getActivity().getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-
                 getSupportFragmentManager().beginTransaction()
                         .add(R.id.item_detail_container, fragment)
                         .commit();
-            } else {
-                getSupportFragmentManager().beginTransaction()
-                        .add(R.id.item_detail_container, fragment)
-                        .commit();
-            }
         }
 
     }

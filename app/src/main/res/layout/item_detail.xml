@@ -1,67 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/item_detail"
-    style="?android:attr/textAppearanceLarge"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="16dp"
-    android:textIsSelectable="true"
-    tools:context=".ItemDetailFragment" />-->
-
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="10"
     tools:context=".ItemDetailFragment">
 
     <com.google.android.exoplayer2.ui.SimpleExoPlayerView
         android:id="@+id/simpleExoPlayerView"
         android:layout_width="match_parent"
-        android:layout_height="274dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="250dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginStart="4dp"
+        >
 
     </com.google.android.exoplayer2.ui.SimpleExoPlayerView>
 
-    <TextView
-        android:id="@+id/stepDescription"
-        android:layout_width="369dp"
-        android:layout_height="43dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="12dp"
-        android:text="fghbjn"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/simpleExoPlayerView"
-        app:layout_constraintVertical_bias="0.0" />
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:elevation="4dp"
+        app:cardCornerRadius="5dp">
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/stepDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="10dp"
+                android:text="fghbjn"
+                android:textSize="25sp" />
+        </android.support.v4.widget.NestedScrollView>
+
+    </android.support.v7.widget.CardView>
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="365dp"
-        android:layout_height="104dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:weightSum="10"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.666"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/stepDescription"
-        app:layout_constraintVertical_bias="1.0">
+        android:orientation="horizontal"
+        android:weightSum="10">
 
         <ImageView
             android:id="@+id/previousVideoStep"
@@ -75,7 +68,7 @@
         <TextView
             android:id="@+id/total_steps"
             android:layout_width="0dp"
-            android:layout_height="87dp"
+            android:layout_height="89dp"
             android:layout_gravity="center"
             android:layout_weight="4"
             android:gravity="center"
@@ -91,8 +84,6 @@
             android:gravity="center"
             android:src="@drawable/ic_chevron_right_black_24dp" />
 
-
     </LinearLayout>
 
-
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>

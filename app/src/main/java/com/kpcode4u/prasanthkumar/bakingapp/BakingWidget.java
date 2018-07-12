@@ -23,7 +23,7 @@ public class BakingWidget extends AppWidgetProvider {
     ArrayList<Ingredients> ingredientsList;
     String recipe;
 
-    private static final  String ACTION_CLICK = "ACTION_CLICK";
+    private static final  String ACTION_CLICK = "com.kpcode4u.prasanthkumar.bakingapp.BAKING";
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
