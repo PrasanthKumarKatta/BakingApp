@@ -54,7 +54,13 @@ public class ItemDetailFragment extends Fragment {
      * The fragment argument representing the item ID that this fragment
      * represents.
      */
+
+    private static final String ingredientsKey = "ingredientsKey";
+    private static final String recipeNameKey = "recipeNameKey";
+    private static final String stepsKey = "stepsKey";
+
     public static final String ARG_ITEM_ID = "item_id";
+    private String positionKey = "position";
 
     /**
      * The dummy content this fragment is presenting.
@@ -111,14 +117,20 @@ public class ItemDetailFragment extends Fragment {
         View rootView;
         ingredientsList = new ArrayList<>();
 
-        ingredientsList = getArguments().getParcelableArrayList("ingredientsList");
+        ingredientsList = getArguments().getParcelableArrayList(ingredientsKey);
+        if (savedInstanceState != null) {
+            // Create the detail fragment and add it to the activity
+            // using a fragment transaction.
+            position = savedInstanceState.getInt("stepPosition");
+            videoPosition = savedInstanceState.getLong("videoPosition");
+        }
 
         if (ingredientsList != null){
                 rootView = inflater.inflate(R.layout.activity_ingredients_list,container,false);
                 ButterKnife.bind(this,rootView);
 
                Toast.makeText(getActivity(), "ingredients : "+ingredientsList.get(position).getIngredient(), Toast.LENGTH_SHORT).show();
-                position = getArguments().getInt("position");
+                position = getArguments().getInt(positionKey);
                 ingredientsadapter = new Ingredientsadapter(getContext(),ingredientsList);
                 mRecyclerView.setAdapter(ingredientsadapter);
                 mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -137,13 +149,7 @@ public class ItemDetailFragment extends Fragment {
                 previous = rootView.findViewById(R.id.previousVideoStep);
                 next = rootView.findViewById(R.id.nextVideoStep);
 
-   /*     if (savedInstanceState == null) {
-            // Create the detail fragment and add it to the activity
-            // using a fragment transaction.
-            position = savedInstanceState.getInt("stepPosition");
-            videoPosition = savedInstanceState.getLong("videoPosition");
-        }
-*/
+
                 stepsVideoList = getArguments().getParcelableArrayList("stepsList");
                 position = getArguments().getInt("position");
                 videoURL = stepsVideoList.get(position).getVideoURL();
@@ -270,5 +276,6 @@ public class ItemDetailFragment extends Fragment {
         outState.putInt("stepPosition", position);
         outState.putLong("videoPosition", exoPlayer.getCurrentPosition());
     }
+
 
 }

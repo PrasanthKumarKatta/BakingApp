@@ -87,11 +87,11 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipesInf
                         bundle.putInt("position",pos);
 
                         bundle.putInt("id",recipesList.get(pos).getId());
-                        intent.putExtra("titlekey",recipesList.get(pos).getName());
+                        intent.putExtra("recipeNameKey",recipesList.get(pos).getName());
                         bundle.putInt("Servings",recipesList.get(pos).getServings());
 
-                        intent.putParcelableArrayListExtra("StepsKey",recipesList.get(pos).getSteps());
-                        intent.putParcelableArrayListExtra("IngredientsKey",recipesList.get(pos).getIngredients());
+                        intent.putParcelableArrayListExtra("stepsKey",recipesList.get(pos).getSteps());
+                        intent.putParcelableArrayListExtra("ingredientsKey",recipesList.get(pos).getIngredients());
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         context.startActivity(intent);
 

@@ -77,6 +77,7 @@ public class ItemDetailActivity extends AppCompatActivity {
             stepsVideoList = getIntent().getParcelableArrayListExtra("stepsList");
             ingredientsList = getIntent().getParcelableArrayListExtra("ingredientsList");
             position = getIntent().getExtras().getInt("position");
+
             Bundle arguments = new Bundle();
             arguments.putParcelableArrayList("stepsList",stepsVideoList);
             arguments.putParcelableArrayList("ingredientsList",ingredientsList);

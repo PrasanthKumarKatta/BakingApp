@@ -21,6 +21,10 @@ public class IngredientsListActivity extends AppCompatActivity {
     @BindView(R.id.ingredients_Recyclerview) RecyclerView mRecyclerView;
 
     ArrayList<Ingredients> ingredientsList;
+    private static final String ingredientsKey = "ingredientsKey";
+    private static final String recipeNameKey = "recipeNameKey";
+    private static final String stepsKey = "stepsKey";
+
 
     private Ingredientsadapter ingredientsadapter;
     private int position;
@@ -43,7 +47,7 @@ public class IngredientsListActivity extends AppCompatActivity {
 
         Intent i=getIntent();
 
-            ingredientsList = getIntent().getParcelableArrayListExtra("IngredientsKey");
+            ingredientsList = getIntent().getParcelableArrayListExtra(ingredientsKey);
         Toast.makeText(this, ""+ingredientsList.size(), Toast.LENGTH_SHORT).show();
 
         ingredientsadapter = new Ingredientsadapter(this,ingredientsList);
