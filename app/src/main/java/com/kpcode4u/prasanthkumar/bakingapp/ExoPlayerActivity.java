@@ -62,51 +62,7 @@ public class ExoPlayerActivity extends AppCompatActivity {
         totalSteps = findViewById(R.id.total_steps);
         previous = findViewById(R.id.previousVideoStep);
         next = findViewById(R.id.nextVideoStep);
-/*
 
-        stepsList = new ArrayList<>();
-        Intent i = getIntent();
-        videoURL = i.getExtras().getString("videoURLKey");
-        description = i.getExtras().getString("stepDescriptionKey");
-        vId = i.getExtras().getInt("videoIdkey");
-        totalVideoSteps = i.getExtras().getInt("totalStepsKey");
-        pos = i.getExtras().getInt("adapterPosKey");
-
-        descriptionTv.setText(description);
-        totalSteps.setText(vId+"/"+totalVideoSteps);
-
-        previous.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                p--;
-                videoURL = stepsList.get(p).getVideoURL();
-                callexoplayer();
-            }
-        });
-
-        next.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                p++;
-                videoURL = stepsList.get(p).getVideoURL();
-                callexoplayer();
-            }
-        });
-
-        callexoplayer();
-
-    }
-*/
-
-/*
-        if (savedInstanceState == null) {
-            // Create the detail fragment and add it to the activity
-            // using a fragment transaction.
-            position = savedInstanceState.getInt("stepPosition");
-            videoPosition = savedInstanceState.getLong("videoPosition");
-        }
-
-*/
         stepsVideoList = getIntent().getParcelableArrayListExtra("stepsList");
         position = getIntent().getExtras().getInt("position");
         videoURL = stepsVideoList.get(position).getVideoURL();
@@ -120,6 +76,7 @@ public class ExoPlayerActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (position >= 1) {
+                    position--;
                     videoURL = stepsVideoList.get(position).getVideoURL();
                     description = stepsVideoList.get(position).getDescription();
                     descriptionTv.setText(description);

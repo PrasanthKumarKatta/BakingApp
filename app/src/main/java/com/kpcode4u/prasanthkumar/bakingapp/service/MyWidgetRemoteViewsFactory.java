@@ -21,7 +21,7 @@ public class MyWidgetRemoteViewsFactory implements RemoteViewsService.RemoteView
     public MyWidgetRemoteViewsFactory(Context context, Intent intent) {
         this.context = context;
         try{
-            this.ingredientsList = intent.getParcelableArrayListExtra("ingredientslist");
+            this.ingredientsList = intent.getParcelableArrayListExtra("Ingredentskey");
         }catch (JsonIOException e){
             e.printStackTrace();
         }
