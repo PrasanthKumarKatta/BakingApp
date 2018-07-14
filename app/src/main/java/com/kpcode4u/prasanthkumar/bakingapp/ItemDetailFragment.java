@@ -61,6 +61,7 @@ public class ItemDetailFragment extends Fragment {
 
     public static final String ARG_ITEM_ID = "item_id";
     private String positionKey = "position";
+    private long currentPosition;
 
     /**
      * The dummy content this fragment is presenting.
@@ -159,6 +160,7 @@ public class ItemDetailFragment extends Fragment {
                 totalVideoSteps = stepsVideoList.size()-1;
                 totalSteps.setText(vId + "/" + totalVideoSteps);
                 callexoplayer();
+
                 previous.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -242,6 +244,7 @@ public class ItemDetailFragment extends Fragment {
     @Override
     public void onStop() {
         super.onStop();
+        currentPosition = exoPlayer.getCurrentPosition();
         releasePlayer();
     }
 
@@ -274,7 +277,12 @@ public class ItemDetailFragment extends Fragment {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt("stepPosition", position);
-        outState.putLong("videoPosition", exoPlayer.getCurrentPosition());
+
+        if (exoPlayer != null) {
+            outState.putLong("videoPosition", exoPlayer.getCurrentPosition());
+        } else {
+            outState.putLong("videoPosition",currentPosition);
+        }
     }
 
 

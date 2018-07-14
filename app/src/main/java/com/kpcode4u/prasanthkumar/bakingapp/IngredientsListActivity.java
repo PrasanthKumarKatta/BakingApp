@@ -28,6 +28,7 @@ public class IngredientsListActivity extends AppCompatActivity {
 
     private Ingredientsadapter ingredientsadapter;
     private int position;
+    private String SAVED_LAYOUT_MANAGER = "SavedLayoutManager";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +64,30 @@ public class IngredientsListActivity extends AppCompatActivity {
 
         Toast.makeText(this, "IngredientsList : "+ingredientsList.size(), Toast.LENGTH_SHORT).show();
 
+
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        Intent i=getIntent();
+        ingredientsList = getIntent().getParcelableArrayListExtra(ingredientsKey);
+        outState.putParcelableArrayList(ingredientsKey,ingredientsList);
+
+        position = ((LinearLayoutManager)mRecyclerView.getLayoutManager()).findFirstVisibleItemPosition();
+        outState.putInt(SAVED_LAYOUT_MANAGER, position);
+
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+
+        if (savedInstanceState != null){
+            ingredientsList = savedInstanceState.getParcelableArrayList(ingredientsKey);
+            position = savedInstanceState.getInt(SAVED_LAYOUT_MANAGER);
+        }
+        super.onRestoreInstanceState(savedInstanceState);
 
     }
 }

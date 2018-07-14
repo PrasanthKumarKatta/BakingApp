@@ -39,7 +39,7 @@ public class BakingWidget extends AppWidgetProvider {
         // int number = (new Random().nextInt(100));
         CharSequence widgetText = context.getString(R.string.app_name);
 
-        RemoteViews remoteViews = new RemoteViews(context.getPackageName(),R.layout.baking_widget_layout);
+        RemoteViews remoteViews = new RemoteViews(context.getPackageName(),R.layout.baking_app_widget);
         Log.w("widgetExample",String.valueOf(widgetText));
 
         //Set the text
@@ -52,9 +52,9 @@ public class BakingWidget extends AppWidgetProvider {
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
         intent.putExtra("IngredientsKey", (new Gson().toJson(ingredientsList)));
         intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
-        remoteViews.setRemoteAdapter(R.id.appwidget_ingredients, intent);
+      /*  remoteViews.setRemoteAdapter(R.id.appwidget_ingredients, intent);
         remoteViews.setTextViewText(R.id.appwidget_recipe, recipe);
-
+*/
 /*
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context,0,intent,PendingIntent.FLAG_UPDATE_CURRENT);
         remoteViews.setOnClickPendingIntent(R.id.update, pendingIntent);

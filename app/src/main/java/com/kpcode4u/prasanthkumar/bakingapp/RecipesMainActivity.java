@@ -34,8 +34,7 @@ public class RecipesMainActivity extends AppCompatActivity {
 
     private static final String SAVED_LAYOUT_MANAGER = "SavedLayoutManager" ;
     @BindView(R.id.recyclerview_Recipe) RecyclerView recyclerView;
-    @BindView(R.id.mainContent_swipeRef)
-    SwipeRefreshLayout swipeRefreshLayout;
+    @BindView(R.id.mainContent_swipeRef) SwipeRefreshLayout swipeRefreshLayout;
 
     private RecipeAdapter recipeAdapter;
     private ArrayList<RecipesResponse> recipesList = new ArrayList<>();
