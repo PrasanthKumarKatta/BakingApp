@@ -58,10 +58,10 @@ public class ItemListActivity extends AppCompatActivity {
 
     @BindView(R.id.ingredients_textView) TextView ingredientTextView;
 
-    private StepsAdapter stepsAdapter;
-    private ArrayList<RecipesResponse> recipeList;
-    private ArrayList<Steps> stepsList;
-    private ArrayList<Ingredients> ingredientsList;
+    private StepsAdapter mStepsAdapter;
+    private ArrayList<RecipesResponse> mRecipeList;
+    private ArrayList<Steps> mStepsList;
+    private ArrayList<Ingredients> mIngredientsList;
     private int position;
     String recipseIngredients;
     private String recipeName;
@@ -69,7 +69,7 @@ public class ItemListActivity extends AppCompatActivity {
 
 
     private boolean mTwoPane;
-    private ItemListActivity context;
+    private ItemListActivity mContext;
 
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.item_list) RecyclerView recyclerView;
@@ -87,10 +87,6 @@ public class ItemListActivity extends AppCompatActivity {
 
 
         if ( findViewById(R.id.item_detail_container) != null) {
-            // The detail container view will be present only in the
-            // large-screen layouts (res/values-w900dp).
-            // If this view is present, then the
-            // activity should be in two-pane mode.
             mTwoPane = true;
         }
 
@@ -102,8 +98,8 @@ public class ItemListActivity extends AppCompatActivity {
 
     private void getRecipseSteps() {
 
-        stepsList = new ArrayList<>();
-        ingredientsList = new ArrayList<>();
+        mStepsList = new ArrayList<>();
+        mIngredientsList = new ArrayList<>();
 
         Bundle bundle=getIntent().getExtras();
         if (bundle!=null) {
@@ -112,16 +108,17 @@ public class ItemListActivity extends AppCompatActivity {
 
             toolbar.setTitle(""+recipeName);
 
-            stepsList = bundle.getParcelableArrayList(stepsKey);
-            ingredientsList = bundle.getParcelableArrayList(ingredientsKey);
+            mStepsList = bundle.getParcelableArrayList(stepsKey);
+            mIngredientsList = bundle.getParcelableArrayList(ingredientsKey);
 
+            //widget adding
             SharedPreferences sharedPreferences = getSharedPreferences("myPreference_baking",MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
             StringBuffer stringBuffer = new StringBuffer();
             int count = 1;
-            for (int i = 0; i<ingredientsList.size(); i++){
+            for (int i = 0; i< mIngredientsList.size(); i++){
 
-                stringBuffer.append(count +""+ingredientsList.get(i).getIngredient()+"\n");
+                stringBuffer.append(count +""+mIngredientsList.get(i).getIngredient()+"\n");
                 count++;
             }
             String line = recipeName +"\n" + stringBuffer.toString();
@@ -134,6 +131,13 @@ public class ItemListActivity extends AppCompatActivity {
             int[] id_List = AppWidgetManager.getInstance(getApplicationContext()).getAppWidgetIds(new ComponentName(getApplication(), BakingAppWidget.class));
             sendBroadcast(i);
 
+          /*  //Widget
+            Intent broadCastIntent = new Intent(getApplicationContext(),BakingWidget.class);
+            broadCastIntent.putParcelableArrayListExtra(ingredientsKey,mIngredientsList);
+            broadCastIntent.putExtra(recipeNameKey, recipeName);
+            getApplicationContext().sendBroadcast(broadCastIntent);
+*/
+
             ingredientTextView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -143,11 +147,10 @@ public class ItemListActivity extends AppCompatActivity {
                  //   Intent intent = new Intent(ItemListActivity.this,ItemDetailActivity.class);
 
                     //  Bundle bundle = new Bundle();
-                    intent.putParcelableArrayListExtra(ingredientsKey,ingredientsList);
-                    intent.putParcelableArrayListExtra(stepsKey,stepsList);
+                    intent.putParcelableArrayListExtra(ingredientsKey,mIngredientsList);
+                    intent.putParcelableArrayListExtra(stepsKey,mStepsList);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                  startActivity(intent);
-                    //  startActivityForResult(intent,1);
+                    startActivity(intent);
 
                  /*   if (mTwoPane) {
                         Bundle arguments = new Bundle();
@@ -199,11 +202,9 @@ public class ItemListActivity extends AppCompatActivity {
     }
 
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
-        recyclerView.setAdapter(new StepsAdapter(ItemListActivity.this, ingredientsList ,stepsList, mTwoPane));
+        recyclerView.setAdapter(new StepsAdapter(ItemListActivity.this, mIngredientsList ,mStepsList,recipeName, mTwoPane));
         recyclerView.scrollToPosition(position);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
-
     }
 
     @Override
@@ -230,9 +231,19 @@ public class ItemListActivity extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        position = ((LinearLayoutManager)recyclerView.getLayoutManager()).findFirstVisibleItemPosition();
-        outState.putInt(SAVED_LAYOUT_MANAGER, position);
 
+/*
+       outState.putString(recipeNameKey,recipeList.get(position).getName());
+        outState.putParcelableArrayList(ingredientsKey,recipeList.get(position).getIngredients());
+        outState.putParcelableArrayList(stepsKey,recipeList.get(position).getSteps());
+        outState.putBoolean("mtwo",mTwoPane);
+*/
+
+
+
+       /* position = ((LinearLayoutManager)recyclerView.getLayoutManager()).findFirstVisibleItemPosition();
+        outState.putInt(SAVED_LAYOUT_MANAGER, position);
+       */
      /*    outState.putString("title",recipeList.get(position).getName());
          outState.putParcelableArrayList("ingredientsList",ingredientsList);
          outState.putParcelableArrayList("stepsKey",stepsList);
@@ -242,11 +253,19 @@ public class ItemListActivity extends AppCompatActivity {
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        if (savedInstanceState != null){
+        super.onRestoreInstanceState(savedInstanceState);
+
+      /*  recipeName = savedInstanceState.getString(recipeNameKey);
+        ingredientsList = savedInstanceState.getParcelableArrayList(ingredientsKey);
+        stepsList = savedInstanceState.getParcelableArrayList(stepsKey);
+        mTwoPane = savedInstanceState.getBoolean("mtwo");
+*/
+
+       /* if (savedInstanceState != null){
             position = savedInstanceState.getInt(SAVED_LAYOUT_MANAGER);
         }
         super.onRestoreInstanceState(savedInstanceState);
-
+*/
         /*  recipeName = savedInstanceState.getString("title");
            ingredientsList = savedInstanceState.getParcelableArrayList("ingredientsList");
            stepsList = savedInstanceState.getParcelableArrayList("stepsKey");

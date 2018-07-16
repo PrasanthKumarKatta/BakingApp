@@ -7,32 +7,24 @@ import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by Prasanth kumar on 24/06/2018.
  */
 
-public class RecipesResponse implements Parcelable {
+public class RecipesResponse implements Serializable, Parcelable {
 
-    @SerializedName("id")
-    @Expose
+
     private Integer id;
 
-    @SerializedName("name")
-    @Expose
     private String name;
 
-    @SerializedName("ingredients")
-    @Expose
     private ArrayList<Ingredients> ingredients;
 
-    @SerializedName("steps")
-    @Expose
     private  ArrayList<Steps> steps;
 
-    @SerializedName("servings")
-    @Expose
     private Integer servings;
 
     public RecipesResponse(Integer id, String name, ArrayList<Ingredients> ingredients, ArrayList<Steps> steps, Integer servings) {

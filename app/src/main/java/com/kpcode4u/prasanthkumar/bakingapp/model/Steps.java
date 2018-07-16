@@ -6,26 +6,20 @@ import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 /**
  * Created by Prasanth kumar on 24/06/2018.
  */
 
-public class Steps implements Parcelable {
+public class Steps implements Serializable, Parcelable {
 
-    @SerializedName("id")
-    @Expose
     private Integer id;
 
-    @SerializedName("shortDescription")
-    @Expose
     private String shortDescription;
 
-    @SerializedName("description")
-    @Expose
     private String description;
 
-    @SerializedName("videoURL")
-    @Expose
     private String videoURL;
 
     public Steps(Integer id, String shortDescription, String description, String videoURL) {

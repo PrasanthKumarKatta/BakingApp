@@ -11,6 +11,7 @@ import android.widget.RemoteViews;
 
 import com.google.gson.Gson;
 import com.kpcode4u.prasanthkumar.bakingapp.model.Ingredients;
+import com.kpcode4u.prasanthkumar.bakingapp.service.MyWidgetRemoteViewService;
 
 import java.util.ArrayList;
 
@@ -20,6 +21,8 @@ public class BakingWidget extends AppWidgetProvider {
     String recipe;
 
     private static final  String ACTION_CLICK = "com.kpcode4u.prasanthkumar.bakingapp.BAKING";
+    private static final String ingredientsKey = "ingredientsKey";
+    private static final String recipeNameKey = "recipeNameKey";
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
@@ -46,16 +49,16 @@ public class BakingWidget extends AppWidgetProvider {
         remoteViews.setTextViewText(R.id.appwidget_text,String.valueOf(widgetText));
 
         //Register an onClickListener
-        Intent intent = new Intent(context, BakingWidget.class);
+        Intent intent = new Intent(context, MyWidgetRemoteViewService.class);
 
         intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
-        intent.putExtra("IngredientsKey", (new Gson().toJson(ingredientsList)));
+        intent.putExtra(ingredientsKey, (new Gson().toJson(ingredientsList)));
         intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
-      /*  remoteViews.setRemoteAdapter(R.id.appwidget_ingredients, intent);
-        remoteViews.setTextViewText(R.id.appwidget_recipe, recipe);
-*/
-/*
+        remoteViews.setRemoteAdapter(R.id.appwidget_ingredients, intent);
+        remoteViews.setTextViewText(R.id.appwidget_text, recipe);
+
+        /*
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context,0,intent,PendingIntent.FLAG_UPDATE_CURRENT);
         remoteViews.setOnClickPendingIntent(R.id.update, pendingIntent);
 */
@@ -78,7 +81,9 @@ public class BakingWidget extends AppWidgetProvider {
     public void onReceive(Context context, Intent intent) {
         try{
 
-            ingredientsList = intent.getParcelableArrayListExtra("Ingredentskey");
+            ingredientsList = intent.getParcelableArrayListExtra(ingredientsKey);
+            recipe = intent.getStringExtra(recipeNameKey);
+
             //recipe = bundle.getString("recipe");
             if (ingredientsList != null){
 

@@ -37,6 +37,8 @@ import com.kpcode4u.prasanthkumar.bakingapp.model.Steps;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+
 /**
  * An activity representing a single Item detail screen. This
  * activity is only used on narrow width devices. On tablet-size devices,
@@ -45,9 +47,16 @@ import java.util.List;
  */
 public class ItemDetailActivity extends AppCompatActivity {
 
+  private static final String ingredientsKey = "ingredientsKey";
+  private static final String recipeNameKey = "recipeNameKey";
+  private static final String stepsKey = "stepsKey";
+  private static final String positionKey = "position";
+
   private ArrayList<Steps> stepsVideoList;
   private ArrayList<Ingredients> ingredientsList;
   private int position;
+  @BindView(R.id.toolbar) Toolbar toolbar;
+  private String recipse;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,20 +77,20 @@ public class ItemDetailActivity extends AppCompatActivity {
         }
 
 
-
-
         if (savedInstanceState == null) {
             // Create the detail fragment and add it to the activity
             // using a fragment transaction.
 
-            stepsVideoList = getIntent().getParcelableArrayListExtra("stepsList");
-            ingredientsList = getIntent().getParcelableArrayListExtra("ingredientsList");
-            position = getIntent().getExtras().getInt("position");
+            stepsVideoList = getIntent().getParcelableArrayListExtra(stepsKey);
+            ingredientsList = getIntent().getParcelableArrayListExtra(ingredientsKey);
+            position = getIntent().getExtras().getInt(positionKey);
+            recipse =getIntent().getExtras().getString(recipeNameKey);
+            setTitle(""+recipse);
 
             Bundle arguments = new Bundle();
-            arguments.putParcelableArrayList("stepsList",stepsVideoList);
-            arguments.putParcelableArrayList("ingredientsList",ingredientsList);
-            arguments.putInt("position",position);
+            arguments.putParcelableArrayList(stepsKey,stepsVideoList);
+            arguments.putParcelableArrayList(ingredientsKey,ingredientsList);
+            arguments.putInt(positionKey,position);
 
 
             ItemDetailFragment fragment = new ItemDetailFragment();

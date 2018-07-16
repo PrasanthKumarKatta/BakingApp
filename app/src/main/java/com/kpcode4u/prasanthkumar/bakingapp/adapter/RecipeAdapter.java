@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.kpcode4u.prasanthkumar.bakingapp.ItemListActivity;
@@ -29,11 +30,13 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipesInf
     private Context context;
     private ArrayList<RecipesResponse> recipesList;
     private ArrayList<Ingredients> ingredientsList;
+    int img[];
     private String SELECTED_RECIPSE_key = "selectedRecipe";
 
-    public RecipeAdapter(Context context, ArrayList<RecipesResponse> recipesList) {
+    public RecipeAdapter(Context context, ArrayList<RecipesResponse> recipesList,int img[]) {
         this.context = context;
         this.recipesList = recipesList;
+        this.img = img;
     }
 
     @Override
@@ -45,16 +48,10 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipesInf
 
     @Override
     public void onBindViewHolder(RecipesInfo holder, final int position) {
+        holder.imageView.setImageResource(img[position]);
         holder.recipeTitle.setText(recipesList.get(position).getName());
+        holder.videos_count_tv.setText(""+recipesList.get(position).getSteps().size()+" Videos");
 
-   /*  holder.setItemClickListener(new ItemClickListener() {
-         @Override
-         public void onItemClickListener(RecipesResponse clickedItemIndexRecipse) {
-
-             passDataToDetailsActivity(clickedItemIndexRecipse);
-         }
-     });
-*/
     }
 
 
@@ -69,6 +66,8 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipesInf
     public class RecipesInfo extends RecyclerView.ViewHolder /*implements View.OnClickListener*/ {
 
         @BindView(R.id.recipe_title_id) TextView recipeTitle;
+        @BindView(R.id.cake_img_id) ImageView imageView;
+        @BindView(R.id.recipe_video_id) TextView videos_count_tv;
 
         public RecipesInfo(View itemView) {
             super(itemView);

@@ -32,20 +32,24 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsInfo> {
     private static final String ingredientsKey = "ingredientsKey";
     private static final String recipeNameKey = "recipeNameKey";
     private static final String stepsKey = "stepsKey";
+    private static final String positionKey = "position";
+
 
     private ItemListActivity context;
     private ArrayList<Steps> stepsList;
     private ArrayList<Ingredients> ingredientsArrayList;
+    private String recipeName;
     private boolean mTwoPane;
   /*  public StepsAdapter(Context context, ArrayList<Steps> stepsList ) {
         this.context = context;
         this.stepsList = stepsList;
 
     }*/
-    public StepsAdapter(ItemListActivity context, ArrayList<Ingredients> ingredientsArrayList, ArrayList<Steps> stepsList , boolean mTwoPane) {
+    public StepsAdapter(ItemListActivity context, ArrayList<Ingredients> ingredientsArrayList, ArrayList<Steps> stepsList,String recipeName , boolean mTwoPane) {
         this.context = context;
         this.ingredientsArrayList = ingredientsArrayList;
         this.stepsList = stepsList;
+        this.recipeName = recipeName;
         this.mTwoPane=mTwoPane;
     }
 
@@ -99,8 +103,9 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsInfo> {
                             arguments.putParcelableArrayList(ingredientsKey,ingredientsArrayList);
 
                         } else {
-                      */      arguments.putParcelableArrayList("stepsList", stepsList);
-                            arguments.putInt("position",pos);
+                      */      arguments.putParcelableArrayList(stepsKey, stepsList);
+                            arguments.putInt(positionKey,pos);
+                            arguments.putString(recipeNameKey,recipeName);
 
 
                         ItemDetailFragment fragment = new ItemDetailFragment();
@@ -115,11 +120,12 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsInfo> {
                         Context context = v.getContext();
                         //Intent i = new Intent(context, ExoPlayerActivity.class);
                         Intent i = new Intent(context, ItemDetailActivity.class);
-                        i.putParcelableArrayListExtra("stepsList",stepsList);
-                        i.putExtra("position",pos);
+                        i.putParcelableArrayListExtra(stepsKey,stepsList);
+                        i.putExtra(recipeNameKey,recipeName);
+                        i.putExtra(positionKey,pos);
                         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         context.startActivity(i);
-                        Toast.makeText(context, "StepsAdapter to ExoPlayer", Toast.LENGTH_SHORT).show();
+                      //  Toast.makeText(context, "StepsAdapter to ExoPlayer", Toast.LENGTH_SHORT).show();
                     }
 
 /*

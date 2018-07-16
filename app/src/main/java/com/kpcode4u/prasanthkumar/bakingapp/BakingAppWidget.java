@@ -18,7 +18,7 @@ public class BakingAppWidget extends AppWidgetProvider {
 
 
         SharedPreferences sharedPreferences =context.getSharedPreferences("myPreference_baking",MODE_PRIVATE);
-        String widget_data=sharedPreferences.getString("widget_List",null);
+        String widget_data = sharedPreferences.getString("widget_List",null);
 
        // CharSequence widgetText = context.getString(R.string.appwidget_text);
         // Construct the RemoteViews object

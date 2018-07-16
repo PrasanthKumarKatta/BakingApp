@@ -6,22 +6,18 @@ import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 /**
  * Created by Prasanth kumar on 24/06/2018.
  */
 
-public class Ingredients  implements Parcelable {
+public class Ingredients  implements Serializable, Parcelable {
 
-    @SerializedName("quantity")
-    @Expose
     private Double quantity;
 
-    @SerializedName("measure")
-    @Expose
     private String measure;
 
-    @SerializedName("ingredient")
-    @Expose
     private String ingredient;
 
     public Ingredients(Double quantity, String measure, String ingredient) {

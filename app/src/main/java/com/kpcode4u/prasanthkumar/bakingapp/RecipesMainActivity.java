@@ -39,15 +39,18 @@ public class RecipesMainActivity extends AppCompatActivity {
     private RecipeAdapter recipeAdapter;
     private ArrayList<RecipesResponse> recipesList = new ArrayList<>();
     private int position;
-
+    int img[];
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipes_main);
         ButterKnife.bind(this);
 
+      img = new int[]{R.drawable.nutralla_pie, R.drawable.brownies, R.drawable.yellow_cake, R.drawable.cheesecake};
+
         initViews();
     }
+
 
     public Activity getActivity() {
         Context context = this;
@@ -59,10 +62,9 @@ public class RecipesMainActivity extends AppCompatActivity {
         }
         return null;
     }
-
     private void initViews() {
 
-        recipeAdapter = new RecipeAdapter(this,recipesList);
+        recipeAdapter = new RecipeAdapter(this,recipesList,img);
         if (getActivity().getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
             recyclerView.setLayoutManager(new GridLayoutManager(this,1));
         } else {
@@ -99,7 +101,7 @@ public class RecipesMainActivity extends AppCompatActivity {
                     //List<RecipesResponse> responseList = response;
 
                     List<RecipesResponse> recipesList = response.body();
-                    recyclerView.setAdapter(new RecipeAdapter(getApplicationContext(), (ArrayList<RecipesResponse>) recipesList));
+                    recyclerView.setAdapter(new RecipeAdapter(getApplicationContext(), (ArrayList<RecipesResponse>) recipesList,img));
                     recyclerView.scrollToPosition(position);
                     if (swipeRefreshLayout.isRefreshing()){
                         swipeRefreshLayout.setRefreshing(false);

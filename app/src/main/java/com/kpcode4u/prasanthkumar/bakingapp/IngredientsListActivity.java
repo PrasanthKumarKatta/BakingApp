@@ -49,7 +49,7 @@ public class IngredientsListActivity extends AppCompatActivity {
         Intent i=getIntent();
 
             ingredientsList = getIntent().getParcelableArrayListExtra(ingredientsKey);
-        Toast.makeText(this, ""+ingredientsList.size(), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, ""+ingredientsList.size(), Toast.LENGTH_SHORT).show();
 
         ingredientsadapter = new Ingredientsadapter(this,ingredientsList);
         mRecyclerView.setAdapter(ingredientsadapter);
@@ -57,13 +57,6 @@ public class IngredientsListActivity extends AppCompatActivity {
         mRecyclerView.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
         mRecyclerView.scrollToPosition(position);
         ingredientsadapter.notifyDataSetChanged();
-
-    }
-
-    private void initViews() {
-
-        Toast.makeText(this, "IngredientsList : "+ingredientsList.size(), Toast.LENGTH_SHORT).show();
-
 
     }
 

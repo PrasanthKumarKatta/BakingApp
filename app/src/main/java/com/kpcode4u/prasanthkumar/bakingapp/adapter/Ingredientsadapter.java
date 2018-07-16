@@ -11,6 +11,7 @@ import com.kpcode4u.prasanthkumar.bakingapp.R;
 import com.kpcode4u.prasanthkumar.bakingapp.model.Ingredients;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -22,9 +23,9 @@ import butterknife.ButterKnife;
 public class Ingredientsadapter extends RecyclerView.Adapter<Ingredientsadapter.IngredientInfo> {
 
     Context context;
-    ArrayList<Ingredients> ingredientsList;
+    List<Ingredients> ingredientsList;
 
-    public Ingredientsadapter(Context context, ArrayList<Ingredients> ingredientsList) {
+    public Ingredientsadapter(Context context, List<Ingredients> ingredientsList) {
         this.context = context;
         this.ingredientsList = ingredientsList;
     }
