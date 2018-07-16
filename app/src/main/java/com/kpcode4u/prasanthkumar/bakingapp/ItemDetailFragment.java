@@ -99,7 +99,8 @@ public class ItemDetailFragment extends Fragment implements ExoPlayer.EventListe
     ImageView next;
 
     //    String videoURL = "https://d17h27t6h515a5.cloudfront.net/topher/2017/April/58ffd974_-intro-creampie/-intro-creampie.mp4";
-    private String videoURL = null, description;
+    private String videoURL = null;
+    private String description;
     private int vId ;
     private int totalVideoSteps;
 
@@ -120,10 +121,6 @@ public class ItemDetailFragment extends Fragment implements ExoPlayer.EventListe
         super.onCreate(savedInstanceState);
 
         if (getArguments().containsKey(ARG_ITEM_ID)) {
-            // Load the dummy content specified by the fragment
-            // arguments. In a real-world scenario, use a Loader
-            // to load content from a content provider.
-            // mItem = DummyContent.ITEM_MAP.get(getArguments().getString(ARG_ITEM_ID));
 
             recipeName = getArguments().getString(recipeNameKey);
 
@@ -142,11 +139,10 @@ public class ItemDetailFragment extends Fragment implements ExoPlayer.EventListe
         View rootView;
         ingredientsList = new ArrayList<>();
         if (savedInstanceState != null) {
-            // Create the detail fragment and add it to the activity
-            // using a fragment transaction.
-            position = savedInstanceState.getInt("stepPosition");
+           position = savedInstanceState.getInt("stepPosition");
             videoPosition = savedInstanceState.getLong("videoPosition");
         }
+
 
         ingredientsList = getArguments().getParcelableArrayList(ingredientsKey);
 
@@ -307,7 +303,6 @@ public class ItemDetailFragment extends Fragment implements ExoPlayer.EventListe
     public void onStop() {
         super.onStop();
        // currentPosition = exoPlayer.getCurrentPosition();
-        exoPlayer.stop();
         releasePlayer();
     }
 

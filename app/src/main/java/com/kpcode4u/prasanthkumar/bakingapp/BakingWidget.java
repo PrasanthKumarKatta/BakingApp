@@ -61,10 +61,8 @@ public class BakingWidget extends AppWidgetProvider {
       //  remoteViews.setRemoteAdapter(R.id.listview_widget, intent);
         remoteViews.setTextViewText(R.id.appwidget_text, recipe);
 
-/*
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context,0,intent,PendingIntent.FLAG_UPDATE_CURRENT);
-        remoteViews.setOnClickPendingIntent(R.id.listview_widget, pendingIntent);
-*/
+      //  remoteViews.setOnClickPendingIntent(R.id.listview_widget, pendingIntent);
 
         appWidgetManager.updateAppWidget(widgetId, remoteViews);
 

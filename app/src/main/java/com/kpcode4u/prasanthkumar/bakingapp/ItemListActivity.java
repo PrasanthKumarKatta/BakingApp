@@ -133,13 +133,18 @@ public class ItemListActivity extends AppCompatActivity {
             i.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS,id_List);
             sendBroadcast(i);
 
-       /*     //Widget
+/*
+            //Widget
             Intent broadCastIntent = new Intent(getApplicationContext(),BakingWidget.class);
             broadCastIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
             broadCastIntent.putParcelableArrayListExtra(ingredientsKey,mIngredientsList);
             broadCastIntent.putExtra(recipeNameKey, recipeName);
+            int[] id_List = AppWidgetManager.getInstance(getApplicationContext()).getAppWidgetIds(new ComponentName(getApplication(), BakingAppWidget.class));
+            broadCastIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS,id_List);
+
             getApplicationContext().sendBroadcast(broadCastIntent);
 */
+
             ingredientTextView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

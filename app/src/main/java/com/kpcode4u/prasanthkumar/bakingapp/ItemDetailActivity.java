@@ -57,6 +57,7 @@ public class ItemDetailActivity extends AppCompatActivity {
   private int position;
   @BindView(R.id.toolbar) Toolbar toolbar;
   private String recipse;
+    private String mTwoPane;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
