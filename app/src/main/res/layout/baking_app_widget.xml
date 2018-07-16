@@ -25,9 +25,6 @@
             android:textSize="30sp"
             android:textStyle="bold|italic" />
 
-        <android.support.v4.widget.NestedScrollView
-           style="@style/recipes_cardview">
-
             <TextView
                 android:id="@+id/appwidget_text"
                 android:layout_width="wrap_content"
@@ -41,8 +38,7 @@
                 android:textColor="#ffffff"
                 android:textSize="20sp"
                 android:textStyle="bold|italic" />
-        </android.support.v4.widget.NestedScrollView>
-
+       
 <!--
 
         <ListView
