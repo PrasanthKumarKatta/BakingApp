@@ -82,7 +82,6 @@
         app:layout_constraintTop_toBottomOf="@+id/nestedScrollView"
         app:layout_constraintVertical_bias="1.0" />
 
-
     <ImageView
         android:id="@+id/previousVideoStep"
         android:layout_width="112dp"
@@ -96,4 +95,5 @@
         app:layout_constraintTop_toBottomOf="@+id/nestedScrollView"
         app:layout_constraintVertical_bias="1.0"
         tools:ignore="UnknownId" />
+
 </android.support.constraint.ConstraintLayout>

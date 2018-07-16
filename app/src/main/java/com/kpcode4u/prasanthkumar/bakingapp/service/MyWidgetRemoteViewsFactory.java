@@ -17,20 +17,23 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MyWidgetRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
 
     private static final int ID_CONSTANT = 0x0101010;
 
+    private static final String ingredientsKey = "ingredientsKey";
+    private static final String recipeNameKey = "recipeNameKey";
 
     private Context context;
-    private ArrayList<Ingredients> ingredientsList;
+    private List<Ingredients> ingredientsList;
 
     public MyWidgetRemoteViewsFactory(Context context, Intent intent) {
         this.context = context;
         try{
             try {
-                String ingredients = intent.getExtras().get("Ingredentskey").toString();
+                String ingredients = intent.getExtras().get(ingredientsKey).toString();
                 this.ingredientsList = convertJsonToIngredientsList(new JSONArray(ingredients),context);
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -104,8 +107,9 @@ public class MyWidgetRemoteViewsFactory implements RemoteViewsService.RemoteView
 
     @Override
     public RemoteViews getViewAt(int position) {
-        RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.ingredientd_row);
-        remoteViews.setTextViewText(R.id.textview_ingredients,ingredientsList.get(position).getIngredient());
+        RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.ingredients_details_widget);
+        remoteViews.setTextViewText(R.id.ingredients_name_txt_view,ingredientsList.get(position).getIngredient());
+        remoteViews.setTextViewText(R.id.ingredients_measurements_txt_view,ingredientsList.get(position).getQuantity()+""+ingredientsList.get(position).getMeasure());
       //  remoteViews.setTextViewText(R.id.textview_mesurement, ingredientsList.get(position).getMeasure());
         //remoteViews.setTextViewText(R.id.textview_quantity, (String.valueOf(ingredientsList.get(position).getQuantity())));
 

@@ -1,5 +1,6 @@
 package com.kpcode4u.prasanthkumar.bakingapp;
 
+import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
@@ -46,21 +47,23 @@ public class BakingWidget extends AppWidgetProvider {
         Log.w("widgetExample",String.valueOf(widgetText));
 
         //Set the text
-        remoteViews.setTextViewText(R.id.appwidget_text,String.valueOf(widgetText));
+        remoteViews.setTextViewText(R.id.appwidget_ingredientName,String.valueOf(widgetText));
 
         //Register an onClickListener
         Intent intent = new Intent(context, MyWidgetRemoteViewService.class);
 
         intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
-        intent.putExtra(ingredientsKey, (new Gson().toJson(ingredientsList)));
+        //intent.putExtra(ingredientsKey, (new Gson().toJson(ingredientsList)).toString());
+        intent.putParcelableArrayListExtra(ingredientsKey,ingredientsList);
         intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
-        remoteViews.setRemoteAdapter(R.id.appwidget_ingredients, intent);
+
+        remoteViews.setRemoteAdapter(R.id.listview_widget, intent);
         remoteViews.setTextViewText(R.id.appwidget_text, recipe);
 
-        /*
+/*
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context,0,intent,PendingIntent.FLAG_UPDATE_CURRENT);
-        remoteViews.setOnClickPendingIntent(R.id.update, pendingIntent);
+        remoteViews.setOnClickPendingIntent(R.id.listview_widget, pendingIntent);
 */
 
         appWidgetManager.updateAppWidget(widgetId, remoteViews);

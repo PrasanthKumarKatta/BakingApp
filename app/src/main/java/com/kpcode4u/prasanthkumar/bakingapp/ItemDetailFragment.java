@@ -139,14 +139,15 @@ public class ItemDetailFragment extends Fragment implements ExoPlayer.EventListe
                              Bundle savedInstanceState) {
         View rootView;
         ingredientsList = new ArrayList<>();
-
-        ingredientsList = getArguments().getParcelableArrayList(ingredientsKey);
         if (savedInstanceState != null) {
             // Create the detail fragment and add it to the activity
             // using a fragment transaction.
             position = savedInstanceState.getInt("stepPosition");
             videoPosition = savedInstanceState.getLong("videoPosition");
         }
+
+
+        ingredientsList = getArguments().getParcelableArrayList(ingredientsKey);
 
         if (ingredientsList != null){
                 rootView = inflater.inflate(R.layout.activity_ingredients_list,container,false);
@@ -341,13 +342,11 @@ public class ItemDetailFragment extends Fragment implements ExoPlayer.EventListe
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt("stepPosition", position);
-
-        if (exoPlayer != null) {
             outState.putLong("videoPosition", exoPlayer.getCurrentPosition());
-        } else {
             outState.putLong("videoPosition",currentPosition);
-        }
     }
+
+
 
 
     @Override
@@ -430,5 +429,7 @@ public class ItemDetailFragment extends Fragment implements ExoPlayer.EventListe
             MediaButtonReceiver.handleIntent(mMediaSession, intent);
         }
     }
+
+
 
 }

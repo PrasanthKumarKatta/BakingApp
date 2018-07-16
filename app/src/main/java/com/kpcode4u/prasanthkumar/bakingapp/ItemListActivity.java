@@ -126,7 +126,7 @@ public class ItemListActivity extends AppCompatActivity {
             editor.apply();
 
 
-            Intent i = new Intent(this, BakingAppWidget.class);
+            Intent i = new Intent(this, BakingWidget.class);
             i.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
             int[] id_List = AppWidgetManager.getInstance(getApplicationContext()).getAppWidgetIds(new ComponentName(getApplication(), BakingAppWidget.class));
             sendBroadcast(i);

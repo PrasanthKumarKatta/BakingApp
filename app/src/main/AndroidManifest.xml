@@ -25,7 +25,6 @@
         </activity>
         <activity
             android:name=".ItemListActivity"
-            android:launchMode="singleTop"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -33,7 +32,6 @@
         </activity>
         <activity
             android:name=".ItemDetailActivity"
-            android:launchMode="singleTop"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -47,7 +45,7 @@
             android:name=".service.MyWidgetRemoteViewService"
             android:enabled="true"
             android:exported="true"
-            android:permission="android.permission.BIND_REMOTEVIEWS"></service>
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
 
         <receiver android:name=".BakingAppWidget">
             <intent-filter>
