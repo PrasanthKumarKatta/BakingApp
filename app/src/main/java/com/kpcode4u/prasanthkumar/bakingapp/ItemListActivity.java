@@ -118,7 +118,8 @@ public class ItemListActivity extends AppCompatActivity {
             int count = 1;
             for (int i = 0; i< mIngredientsList.size(); i++){
 
-                stringBuffer.append(count +""+mIngredientsList.get(i).getIngredient()+"\n");
+                stringBuffer.append(count +""+mIngredientsList.get(i).getIngredient()+"-"+
+                        mIngredientsList.get(i).getQuantity()+mIngredientsList.get(i).getMeasure()+"\n");
                 count++;
             }
             String line = recipeName +"\n" + stringBuffer.toString();
@@ -126,18 +127,19 @@ public class ItemListActivity extends AppCompatActivity {
             editor.apply();
 
 
-            Intent i = new Intent(this, BakingWidget.class);
+            Intent i = new Intent(this, BakingAppWidget.class);
             i.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
             int[] id_List = AppWidgetManager.getInstance(getApplicationContext()).getAppWidgetIds(new ComponentName(getApplication(), BakingAppWidget.class));
+            i.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS,id_List);
             sendBroadcast(i);
 
-          /*  //Widget
+       /*     //Widget
             Intent broadCastIntent = new Intent(getApplicationContext(),BakingWidget.class);
+            broadCastIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
             broadCastIntent.putParcelableArrayListExtra(ingredientsKey,mIngredientsList);
             broadCastIntent.putExtra(recipeNameKey, recipeName);
             getApplicationContext().sendBroadcast(broadCastIntent);
 */
-
             ingredientTextView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

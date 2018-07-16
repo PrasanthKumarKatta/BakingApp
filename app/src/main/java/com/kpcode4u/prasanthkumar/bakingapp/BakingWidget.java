@@ -58,7 +58,7 @@ public class BakingWidget extends AppWidgetProvider {
         intent.putParcelableArrayListExtra(ingredientsKey,ingredientsList);
         intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
 
-        remoteViews.setRemoteAdapter(R.id.listview_widget, intent);
+      //  remoteViews.setRemoteAdapter(R.id.listview_widget, intent);
         remoteViews.setTextViewText(R.id.appwidget_text, recipe);
 
 /*

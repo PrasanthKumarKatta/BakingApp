@@ -26,9 +26,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.ExoPlaybackException;
 import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.ExoPlayerFactory;
+import com.google.android.exoplayer2.LoadControl;
 import com.google.android.exoplayer2.PlaybackParameters;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.Timeline;
@@ -145,7 +147,6 @@ public class ItemDetailFragment extends Fragment implements ExoPlayer.EventListe
             position = savedInstanceState.getInt("stepPosition");
             videoPosition = savedInstanceState.getLong("videoPosition");
         }
-
 
         ingredientsList = getArguments().getParcelableArrayList(ingredientsKey);
 
@@ -276,7 +277,10 @@ public class ItemDetailFragment extends Fragment implements ExoPlayer.EventListe
 
                 BandwidthMeter bandwidthMeter = new DefaultBandwidthMeter();
                 TrackSelector trackSelector = new DefaultTrackSelector(new AdaptiveTrackSelection.Factory(bandwidthMeter));
-                exoPlayer = ExoPlayerFactory.newSimpleInstance(getActivity(), trackSelector);
+                LoadControl loadControl = new DefaultLoadControl();
+                exoPlayer = ExoPlayerFactory.newSimpleInstance(getActivity(), trackSelector,loadControl);
+
+                exoPlayer.addListener(this);
 
                 Uri videoURI = Uri.parse(videoURL);
 
@@ -288,6 +292,7 @@ public class ItemDetailFragment extends Fragment implements ExoPlayer.EventListe
                 exoPlayerView.setPlayer(exoPlayer);
                 exoPlayer.prepare(mediaSource);
                 exoPlayer.setPlayWhenReady(true);
+
                 if (videoPosition !=0){
                     exoPlayer.seekTo(videoPosition);
                 }
@@ -302,18 +307,19 @@ public class ItemDetailFragment extends Fragment implements ExoPlayer.EventListe
     public void onStop() {
         super.onStop();
        // currentPosition = exoPlayer.getCurrentPosition();
+        exoPlayer.stop();
         releasePlayer();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        saveCurrentCideoState();
+        saveCurrentVideoState();
         currentPosition = exoPlayer.getCurrentPosition();
         releasePlayer();
     }
 
-    private void saveCurrentCideoState() {
+    private void saveCurrentVideoState() {
         seekTo = exoPlayer.getCurrentPosition();
         isPlaying = exoPlayer.getPlayWhenReady();
     }
@@ -341,17 +347,21 @@ public class ItemDetailFragment extends Fragment implements ExoPlayer.EventListe
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putInt("stepPosition", position);
+            outState.putInt("stepPosition", position);
             outState.putLong("videoPosition", exoPlayer.getCurrentPosition());
             outState.putLong("videoPosition",currentPosition);
     }
 
-
-
-
+    /*
+    * Release the Player
+    */
     @Override
     public void onDestroy() {
         super.onDestroy();
+        releasePlayer();
+        if (mMediaSession !=null){
+            mMediaSession.setActive(false);
+        }
     }
 
     @Override

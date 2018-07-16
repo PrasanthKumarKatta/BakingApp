@@ -1,8 +1,10 @@
 package com.kpcode4u.prasanthkumar.bakingapp;
 
+import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.widget.RemoteViews;
 
@@ -24,6 +26,11 @@ public class BakingAppWidget extends AppWidgetProvider {
         // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.baking_app_widget);
         views.setTextViewText(R.id.appwidget_text, widget_data);
+
+        Intent intent = new Intent(context,RecipesMainActivity.class);
+
+        PendingIntent pi = PendingIntent.getActivity(context, 1,intent, PendingIntent.FLAG_UPDATE_CURRENT );
+        views.setOnClickPendingIntent(R.id.widget_layout, pi);
 
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);

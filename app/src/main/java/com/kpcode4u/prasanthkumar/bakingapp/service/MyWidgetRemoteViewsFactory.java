@@ -32,13 +32,13 @@ public class MyWidgetRemoteViewsFactory implements RemoteViewsService.RemoteView
     public MyWidgetRemoteViewsFactory(Context context, Intent intent) {
         this.context = context;
         try{
-            try {
-                String ingredients = intent.getExtras().get(ingredientsKey).toString();
+
+               /* String ingredients = intent.getExtras().get(ingredientsKey).toString();
                 this.ingredientsList = convertJsonToIngredientsList(new JSONArray(ingredients),context);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }catch (JsonIOException e){
+                */
+               this.ingredientsList = intent.getParcelableArrayListExtra(ingredientsKey);
+
+        }catch (Exception e){
             e.printStackTrace();
         }
 
@@ -128,7 +128,7 @@ public class MyWidgetRemoteViewsFactory implements RemoteViewsService.RemoteView
 
     @Override
     public long getItemId(int position) {
-        return ID_CONSTANT + position;
+        return /*ID_CONSTANT + position*/ 0;
     }
 
     @Override
