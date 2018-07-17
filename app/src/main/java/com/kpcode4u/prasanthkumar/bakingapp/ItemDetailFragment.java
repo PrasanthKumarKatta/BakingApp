@@ -314,7 +314,7 @@ public class ItemDetailFragment extends Fragment implements ExoPlayer.EventListe
 
                 exoPlayerView.setPlayer(exoPlayer);
                 exoPlayer.prepare(mediaSource);
-                exoPlayer.setPlayWhenReady(true);
+                exoPlayer.setPlayWhenReady(isPlaying);
 
                 if (videoPosition !=0){
                     exoPlayer.seekTo(videoPosition);
