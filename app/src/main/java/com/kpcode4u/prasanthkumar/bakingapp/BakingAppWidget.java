@@ -19,7 +19,7 @@ public class BakingAppWidget extends AppWidgetProvider {
                                 int appWidgetId) {
 
 
-        SharedPreferences sharedPreferences =context.getSharedPreferences("myPreference_baking",MODE_PRIVATE);
+        SharedPreferences sharedPreferences =context.getSharedPreferences("Preference_baking",MODE_PRIVATE);
         String widget_data = sharedPreferences.getString("widget_List",null);
 
        // CharSequence widgetText = context.getString(R.string.appwidget_text);

@@ -37,9 +37,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.kpcode4u.prasanthkumar.bakingapp.ItemListActivity" />
         </activity>
-        <activity
-            android:name=".ExoPlayerActivity"
-            android:launchMode="singleTop" />
 
         <service
             android:name=".service.MyWidgetRemoteViewService"

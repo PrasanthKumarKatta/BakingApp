@@ -8,9 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.kpcode4u.prasanthkumar.bakingapp.ExoPlayerActivity;
 import com.kpcode4u.prasanthkumar.bakingapp.ItemDetailActivity;
 import com.kpcode4u.prasanthkumar.bakingapp.ItemDetailFragment;
 import com.kpcode4u.prasanthkumar.bakingapp.ItemListActivity;
@@ -127,17 +125,6 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsInfo> {
                         context.startActivity(i);
                       //  Toast.makeText(context, "StepsAdapter to ExoPlayer", Toast.LENGTH_SHORT).show();
                     }
-
-/*
-                    Context context = v.getContext();
-                    Intent i = new Intent(context, ExoPlayerActivity.class);
-                    //Intent i = new Intent(context, ItemDetailActivity.class);
-                    i.putParcelableArrayListExtra("stepsList",stepsList);
-                    i.putExtra("position",pos);
-                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    context.startActivity(i);
-                    Toast.makeText(context, "StepsAdapter to ExoPlayer", Toast.LENGTH_SHORT).show();
-*/
 
                 }
             });

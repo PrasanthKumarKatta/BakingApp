@@ -29,10 +29,10 @@ import static org.hamcrest.Matchers.is;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class RecipesMainActivityTest_tablet {
+public class RecipesMainActivityTest_ingredients_test_phone {
 
     @Test
-    public void recipesMainActivityTest_tablet() {
+    public void recipesMainActivityTest_ingredients_test_phone() {
         ViewInteraction recyclerView = onView(
                 allOf(withId(R.id.recyclerview_Recipe),
                         childAtPosition(
@@ -52,32 +52,15 @@ public class RecipesMainActivityTest_tablet {
 
         pressBack();
 
-        ViewInteraction recyclerView2 = onView(
-                allOf(withId(R.id.item_list),
+        ViewInteraction appCompatTextView2 = onView(
+                allOf(withId(R.id.ingredients_textView), withText("Ingredients List"),
                         childAtPosition(
-                                withClassName(is("android.support.v4.widget.NestedScrollView")),
-                                0)));
-        recyclerView2.perform(actionOnItemAtPosition(0, click()));
-
-        // Added a sleep statement to match the app's execution delay.
-        // The recommended way to handle such scenarios is to use Espresso idling resources:
-        // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        ViewInteraction appCompatImageView = onView(
-                allOf(withId(R.id.nextVideoStep),
-                        childAtPosition(
-                                allOf(withId(R.id.linearLayout),
-                                        childAtPosition(
-                                                withClassName(is("android.widget.LinearLayout")),
-                                                2)),
-                                2),
+                                childAtPosition(
+                                        withClassName(is("android.support.v4.widget.NestedScrollView")),
+                                        0),
+                                0),
                         isDisplayed()));
-        appCompatImageView.perform(click());
+        appCompatTextView2.perform(click());
 
     }
 

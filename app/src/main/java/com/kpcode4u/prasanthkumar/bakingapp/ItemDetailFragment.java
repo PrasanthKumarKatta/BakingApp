@@ -193,8 +193,10 @@ public class ItemDetailFragment extends Fragment implements ExoPlayer.EventListe
                             videoURL = stepsVideoList.get(position).getVideoURL();
                             description = stepsVideoList.get(position).getDescription();
                             descriptionTv.setText(description);
-                            callexoplayer();
+                            exoPlayer.stop();
                             exoPlayer.seekTo(0);
+                            callexoplayer();
+
                             vId = stepsVideoList.get(position).getId();
                             totalVideoSteps = stepsVideoList.size()-1;
                             totalSteps.setText(vId + "/" + totalVideoSteps);
@@ -216,8 +218,9 @@ public class ItemDetailFragment extends Fragment implements ExoPlayer.EventListe
                             videoURL = stepsVideoList.get(position).getVideoURL();
                             description = stepsVideoList.get(position).getDescription();
                             descriptionTv.setText(description);
-                            callexoplayer();
+                            exoPlayer.stop();
                             exoPlayer.seekTo(0);
+                            callexoplayer();
 
                             vId = stepsVideoList.get(position).getId();
                             totalVideoSteps = stepsVideoList.size()-1;
@@ -302,21 +305,13 @@ public class ItemDetailFragment extends Fragment implements ExoPlayer.EventListe
     @Override
     public void onStop() {
         super.onStop();
-       // currentPosition = exoPlayer.getCurrentPosition();
-        releasePlayer();
+        exoPlayer.stop();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        saveCurrentVideoState();
         currentPosition = exoPlayer.getCurrentPosition();
-        releasePlayer();
-    }
-
-    private void saveCurrentVideoState() {
-        seekTo = exoPlayer.getCurrentPosition();
-        isPlaying = exoPlayer.getPlayWhenReady();
     }
 
     @Override
