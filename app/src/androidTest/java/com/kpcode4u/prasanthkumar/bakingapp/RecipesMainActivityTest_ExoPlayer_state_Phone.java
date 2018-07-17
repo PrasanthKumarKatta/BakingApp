@@ -12,7 +12,6 @@ import android.view.ViewParent;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
-import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -21,68 +20,52 @@ import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withClassName;
+import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.is;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class RecipesMainActivityTest_steps_exoplayer {
-
+public class RecipesMainActivityTest_ExoPlayer_state_Phone {
 
     @Test
-    public void recipesMainActivityTest_steps_exoplayer() {
+    public void recipesMainActivityTest_ExoPlayer_state_Phone() {
         ViewInteraction recyclerView = onView(
                 allOf(withId(R.id.recyclerview_Recipe),
                         childAtPosition(
                                 withClassName(is("android.widget.LinearLayout")),
                                 0)));
-        recyclerView.perform(actionOnItemAtPosition(1, click()));
+        recyclerView.perform(actionOnItemAtPosition(0, click()));
 
-        ViewInteraction recyclerView2 = onView(
-                allOf(withId(R.id.item_list),
-                        childAtPosition(
-                                withClassName(is("android.support.v4.widget.NestedScrollView")),
-                                0)));
-        recyclerView2.perform(actionOnItemAtPosition(0, click()));
+        ViewInteraction linearLayout = onView(
+                allOf(childAtPosition(
+                        allOf(withId(R.id.item_list),
+                                childAtPosition(
+                                        withClassName(is("android.support.v4.widget.NestedScrollView")),
+                                        0)),
+                        2),
+                        isDisplayed()));
+        linearLayout.perform(click());
 
         // Added a sleep statement to match the app's execution delay.
         // The recommended way to handle such scenarios is to use Espresso idling resources:
         // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
         try {
-            Thread.sleep(4999);
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        ViewInteraction appCompatImageView = onView(
-                allOf(withId(R.id.nextVideoStep),
+        ViewInteraction appCompatImageButton = onView(
+                allOf(withId(R.id.exo_play), withContentDescription("Play"),
                         childAtPosition(
                                 childAtPosition(
-                                        withId(R.id.item_detail_container),
+                                        withClassName(is("android.widget.LinearLayout")),
                                         0),
-                                0),
+                                2),
                         isDisplayed()));
-        appCompatImageView.perform(click());
-
-        // Added a sleep statement to match the app's execution delay.
-        // The recommended way to handle such scenarios is to use Espresso idling resources:
-        // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        ViewInteraction appCompatImageView2 = onView(
-                allOf(withId(R.id.nextVideoStep),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.item_detail_container),
-                                        0),
-                                0),
-                        isDisplayed()));
-        appCompatImageView2.perform(click());
+        appCompatImageButton.perform(click());
 
         // Added a sleep statement to match the app's execution delay.
         // The recommended way to handle such scenarios is to use Espresso idling resources:
@@ -93,15 +76,15 @@ public class RecipesMainActivityTest_steps_exoplayer {
             e.printStackTrace();
         }
 
-        ViewInteraction appCompatImageView3 = onView(
-                allOf(withId(R.id.nextVideoStep),
+        ViewInteraction appCompatImageButton2 = onView(
+                allOf(withId(R.id.exo_play), withContentDescription("Play"),
                         childAtPosition(
                                 childAtPosition(
-                                        withId(R.id.item_detail_container),
+                                        withClassName(is("android.widget.LinearLayout")),
                                         0),
-                                0),
+                                2),
                         isDisplayed()));
-        appCompatImageView3.perform(click());
+        appCompatImageButton2.perform(click());
 
         // Added a sleep statement to match the app's execution delay.
         // The recommended way to handle such scenarios is to use Espresso idling resources:
@@ -112,15 +95,72 @@ public class RecipesMainActivityTest_steps_exoplayer {
             e.printStackTrace();
         }
 
-        ViewInteraction appCompatImageView4 = onView(
-                allOf(withId(R.id.nextVideoStep),
+        ViewInteraction appCompatImageButton3 = onView(
+                allOf(withId(R.id.exo_play), withContentDescription("Play"),
                         childAtPosition(
                                 childAtPosition(
-                                        withId(R.id.item_detail_container),
+                                        withClassName(is("android.widget.LinearLayout")),
                                         0),
-                                0),
+                                2),
                         isDisplayed()));
-        appCompatImageView4.perform(click());
+        appCompatImageButton3.perform(click());
+
+        // Added a sleep statement to match the app's execution delay.
+        // The recommended way to handle such scenarios is to use Espresso idling resources:
+        // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        ViewInteraction appCompatImageButton4 = onView(
+                allOf(withId(R.id.exo_play), withContentDescription("Play"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(is("android.widget.LinearLayout")),
+                                        0),
+                                2),
+                        isDisplayed()));
+        appCompatImageButton4.perform(click());
+
+        // Added a sleep statement to match the app's execution delay.
+        // The recommended way to handle such scenarios is to use Espresso idling resources:
+        // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        ViewInteraction appCompatImageButton5 = onView(
+                allOf(withId(R.id.exo_pause), withContentDescription("Pause"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(is("android.widget.LinearLayout")),
+                                        0),
+                                3),
+                        isDisplayed()));
+        appCompatImageButton5.perform(click());
+
+        // Added a sleep statement to match the app's execution delay.
+        // The recommended way to handle such scenarios is to use Espresso idling resources:
+        // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        ViewInteraction appCompatImageButton6 = onView(
+                allOf(withId(R.id.exo_play), withContentDescription("Play"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(is("android.widget.LinearLayout")),
+                                        0),
+                                2),
+                        isDisplayed()));
+        appCompatImageButton6.perform(click());
 
     }
 

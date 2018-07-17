@@ -35,7 +35,9 @@
         </activity>
         <activity
             android:name=".ItemDetailActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
+            >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.kpcode4u.prasanthkumar.bakingapp.ItemListActivity" />

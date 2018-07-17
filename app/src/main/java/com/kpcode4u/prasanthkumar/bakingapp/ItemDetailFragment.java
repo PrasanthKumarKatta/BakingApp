@@ -82,7 +82,7 @@ public class ItemDetailFragment extends Fragment implements ExoPlayer.EventListe
     private String recipeName;
 
     private long seekTo = 0;
-    private boolean isPlaying = false;
+    private boolean isPlaying = true;
 
 
     public ItemDetailFragment() {
