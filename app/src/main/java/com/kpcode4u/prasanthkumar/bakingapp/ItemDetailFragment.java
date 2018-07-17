@@ -8,7 +8,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.media.session.MediaButtonReceiver;
@@ -127,7 +126,7 @@ public class ItemDetailFragment extends Fragment implements ExoPlayer.EventListe
             Activity activity = this.getActivity();
 
             if (toolbar != null) {
-                toolbar.setTitle(recipeName);
+                toolbar.setTitle(""+recipeName);
             }
 
         }
