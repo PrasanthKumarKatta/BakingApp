@@ -70,7 +70,9 @@ public class ItemListActivity extends AppCompatActivity {
     private ItemListActivity mContext;
 
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.item_list) RecyclerView recyclerView;
+//    @BindView(R.id.item_list) RecyclerView recyclerView;
+    @BindView(R.id.item_list) StatefullRecyclerView recyclerView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -168,9 +170,9 @@ public class ItemListActivity extends AppCompatActivity {
         finish();
     }
 
-    private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
+    private void setupRecyclerView(@NonNull StatefullRecyclerView recyclerView) {
         recyclerView.setAdapter(new StepsAdapter(ItemListActivity.this, mIngredientsList ,mStepsList,recipeName, mTwoPane));
-        recyclerView.scrollToPosition(position);
+   //   recyclerView.scrollToPosition(position);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
@@ -195,35 +197,35 @@ public class ItemListActivity extends AppCompatActivity {
         setupRecyclerView( recyclerView);
     }
 
-    @Override
+  /*  @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
 
         position = ((LinearLayoutManager)recyclerView.getLayoutManager()).findFirstVisibleItemPosition();
         outState.putInt(SAVED_LAYOUT_MANAGER, position);
-/*
+*//*
          outState.putString("title",mRecipeList.get(position).getName());
          outState.putParcelableArrayList("ingredientsList",mIngredientsList);
          outState.putParcelableArrayList("stepsKey",mStepsList);
          outState.putBoolean("mTwo",mTwoPane);
-*/
+*//*
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
 
-     /*   recipeName = savedInstanceState.getString(recipeNameKey);
+     *//*   recipeName = savedInstanceState.getString(recipeNameKey);
         mIngredientsList = savedInstanceState.getParcelableArrayList(ingredientsKey);
         mStepsList = savedInstanceState.getParcelableArrayList(stepsKey);
         mTwoPane = savedInstanceState.getBoolean("mtwo");
-*/
+*//*
         if (savedInstanceState != null){
             position = savedInstanceState.getInt(SAVED_LAYOUT_MANAGER);
         }
         super.onRestoreInstanceState(savedInstanceState);
     }
 
-
+*/
 }

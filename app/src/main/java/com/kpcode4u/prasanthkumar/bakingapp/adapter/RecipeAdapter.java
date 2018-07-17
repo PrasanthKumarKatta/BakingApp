@@ -58,9 +58,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipesInf
         } else {
             Picasso.with(context).load(recipesList.get(position).getImage()).centerCrop().placeholder(R.mipmap.ic_launcher).into(holder.imageView);
         }
-
     }
-
 
     @Override
     public int getItemCount() {

@@ -202,7 +202,6 @@ public class ItemDetailFragment extends Fragment implements ExoPlayer.EventListe
                     Toast.makeText(getActivity(), "No Thubnail", Toast.LENGTH_SHORT).show();
                 }
             }
-
             if (stepsVideoList.get(position).getVideoURL().contentEquals("")){
                 exoPlayerView.setVisibility(View.GONE);
             }
