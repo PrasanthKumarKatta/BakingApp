@@ -27,12 +27,15 @@ public class RecipesResponse implements Serializable, Parcelable {
 
     private Integer servings;
 
-    public RecipesResponse(Integer id, String name, ArrayList<Ingredients> ingredients, ArrayList<Steps> steps, Integer servings) {
+    private String image;
+
+    public RecipesResponse(Integer id, String name, ArrayList<Ingredients> ingredients, ArrayList<Steps> steps, Integer servings, String image) {
         this.id = id;
         this.name = name;
         this.ingredients = ingredients;
         this.steps = steps;
         this.servings = servings;
+        this.image = image;
     }
 
     protected RecipesResponse(Parcel in) {
@@ -119,4 +122,16 @@ public class RecipesResponse implements Serializable, Parcelable {
             return new RecipesResponse[0];
         }
     };
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public static Creator<RecipesResponse> getCREATOR() {
+        return CREATOR;
+    }
 }

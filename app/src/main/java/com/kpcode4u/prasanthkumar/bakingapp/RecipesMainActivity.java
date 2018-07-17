@@ -1,10 +1,14 @@
 package com.kpcode4u.prasanthkumar.bakingapp;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.ContextWrapper;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -15,6 +19,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.kpcode4u.prasanthkumar.bakingapp.Internet.InternetConnectivity;
 import com.kpcode4u.prasanthkumar.bakingapp.adapter.RecipeAdapter;
 import com.kpcode4u.prasanthkumar.bakingapp.api.Client;
 import com.kpcode4u.prasanthkumar.bakingapp.api.Service;
@@ -46,9 +51,38 @@ public class RecipesMainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_recipes_main);
         ButterKnife.bind(this);
 
-      img = new int[]{R.drawable.nutralla_pie, R.drawable.brownies, R.drawable.yellow_cake, R.drawable.cheesecake};
+        checkInternet();
 
-        initViews();
+        /*img = new int[]{R.drawable.nutralla_pie, R.drawable.brownies, R.drawable.yellow_cake, R.drawable.cheesecake};
+
+        initViews();*/
+    }
+
+    private void checkInternet() {
+        if (InternetConnectivity.isNetworkAvailable(getApplicationContext())){
+            img = new int[]{R.drawable.nutralla_pie, R.drawable.brownies, R.drawable.yellow_cake, R.drawable.cheesecake};
+            initViews();
+           //getRecipses();
+        } else {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle(R.string.permissions);
+            builder.setMessage(R.string.error_dialog_internet);
+            builder.setPositiveButton(getString(R.string.goto_settings_positive_btn), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Intent i = new Intent(Settings.ACTION_WIRELESS_SETTINGS);
+                    startActivity(i);
+                }
+            });
+            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+
+                }
+            });
+            builder.show();
+        }
     }
 
 
@@ -62,37 +96,12 @@ public class RecipesMainActivity extends AppCompatActivity {
         }
         return null;
     }
-    private void initViews() {
-
-        recipeAdapter = new RecipeAdapter(this,recipesList,img);
-        if (getActivity().getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
-            recyclerView.setLayoutManager(new GridLayoutManager(this,1));
-        } else {
-            recyclerView.setLayoutManager(new GridLayoutManager(this,2));
-        }
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.addItemDecoration(new DividerItemDecoration(this,LinearLayoutManager.VERTICAL));
-        recyclerView.setAdapter(recipeAdapter);
-        recipeAdapter.notifyDataSetChanged();
-
-        swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_orange_dark);
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                initViews();
-                Toast.makeText(RecipesMainActivity.this, "Recipses Refreshed", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        getRecipses();
-    }
 
     private void getRecipses() {
 
         try {
-
             Client client = new Client();
-            Service apiService = client.getClient().create(Service.class);
+            Service apiService = Client.getClient().create(Service.class);
 
             Call<List<RecipesResponse>> call =apiService.getRecipes();
             call.enqueue(new Callback<List<RecipesResponse>>() {
@@ -120,18 +129,51 @@ public class RecipesMainActivity extends AppCompatActivity {
             Log.d("Error",e.getMessage());
             Toast.makeText(this, ""+e.toString(), Toast.LENGTH_SHORT).show();
         }
+
+      //  initViews();
+    }
+
+    private void initViews() {
+
+        recipeAdapter = new RecipeAdapter(this,recipesList,img);
+        if (getActivity().getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
+            recyclerView.setLayoutManager(new GridLayoutManager(this,1));
+        } else {
+            recyclerView.setLayoutManager(new GridLayoutManager(this,2));
+        }
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.addItemDecoration(new DividerItemDecoration(this,LinearLayoutManager.VERTICAL));
+        recyclerView.setAdapter(recipeAdapter);
+        recipeAdapter.notifyDataSetChanged();
+
+        swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_orange_dark);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                initViews();
+                Toast.makeText(RecipesMainActivity.this, "Recipses Refreshed", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        getRecipses();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        getRecipses();
+        checkInternet();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
-        getRecipses();
+        checkInternet();
     }
 
     @Override

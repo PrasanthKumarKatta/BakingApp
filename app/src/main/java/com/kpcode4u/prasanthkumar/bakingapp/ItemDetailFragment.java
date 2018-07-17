@@ -160,30 +160,53 @@ public class ItemDetailFragment extends Fragment implements ExoPlayer.EventListe
                 ingredientsadapter.notifyDataSetChanged();
 
             } else {
-                rootView = inflater.inflate(R.layout.item_detail, container, false);
+            rootView = inflater.inflate(R.layout.item_detail, container, false);
 
-                stepsVideoList = new ArrayList<>();
+            stepsVideoList = new ArrayList<>();
 
-                exoPlayerView = rootView.findViewById(R.id.simpleExoPlayerView);
-                descriptionTv = rootView.findViewById(R.id.stepDescription);
-                totalSteps = rootView.findViewById(R.id.total_steps);
-                previous = rootView.findViewById(R.id.previousVideoStep);
-                next = rootView.findViewById(R.id.nextVideoStep);
+            exoPlayerView = rootView.findViewById(R.id.simpleExoPlayerView);
+            descriptionTv = rootView.findViewById(R.id.stepDescription);
+            totalSteps = rootView.findViewById(R.id.total_steps);
+            previous = rootView.findViewById(R.id.previousVideoStep);
+            next = rootView.findViewById(R.id.nextVideoStep);
 
-                stepsVideoList = getArguments().getParcelableArrayList(stepsKey);
-                position = getArguments().getInt(positionKey);
+            stepsVideoList = getArguments().getParcelableArrayList(stepsKey);
+            position = getArguments().getInt(positionKey);
+
+         //   videoURL = stepsVideoList.get(position).getVideoURL();
+
+            description = stepsVideoList.get(position).getDescription();
+            descriptionTv.setText(description);
+            vId = stepsVideoList.get(position).getId();
+            totalVideoSteps = stepsVideoList.size() - 1;
+            totalSteps.setText(vId + "/" + totalVideoSteps);
+
+            if (!stepsVideoList.get(position).getVideoURL().contentEquals(""))
+            {
                 videoURL = stepsVideoList.get(position).getVideoURL();
-                description = stepsVideoList.get(position).getDescription();
-                descriptionTv.setText(description);
-                vId = stepsVideoList.get(position).getId();
-                totalVideoSteps = stepsVideoList.size()-1;
-                totalSteps.setText(vId + "/" + totalVideoSteps);
-
+                exoPlayerView.setVisibility(View.VISIBLE);
                 //Media Session
-                 initializeMediaSession();
-
+                initializeMediaSession();
                 //calling ExoPlayer
                 callexoplayer();
+            } else {
+                if (!stepsVideoList.get(position).getThumbnailURL().contentEquals("")){
+
+                    videoURL = stepsVideoList.get(position).getThumbnailURL();
+                    exoPlayerView.setVisibility(View.VISIBLE);
+                    //Media Session
+                    initializeMediaSession();
+                    //calling ExoPlayer
+                    callexoplayer();
+                } else {
+                    Toast.makeText(getActivity(), "No Thubnail", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            if (stepsVideoList.get(position).getVideoURL().contentEquals("")){
+                exoPlayerView.setVisibility(View.GONE);
+            }
+
 
                 previous.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -279,6 +302,8 @@ public class ItemDetailFragment extends Fragment implements ExoPlayer.EventListe
                 LoadControl loadControl = new DefaultLoadControl();
                 exoPlayer = ExoPlayerFactory.newSimpleInstance(getActivity(), trackSelector,loadControl);
 
+                exoPlayer.seekTo(currentPosition);
+
                 exoPlayer.addListener(this);
 
                 Uri videoURI = Uri.parse(videoURL);
@@ -311,7 +336,10 @@ public class ItemDetailFragment extends Fragment implements ExoPlayer.EventListe
     @Override
     public void onPause() {
         super.onPause();
-        currentPosition = exoPlayer.getCurrentPosition();
+        isPlaying = exoPlayer.getPlayWhenReady();
+        if (exoPlayer !=null){
+         currentPosition = exoPlayer.getCurrentPosition();
+        }
     }
 
     @Override

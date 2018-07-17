@@ -15,6 +15,7 @@ import com.kpcode4u.prasanthkumar.bakingapp.ItemListActivity;
 import com.kpcode4u.prasanthkumar.bakingapp.R;
 import com.kpcode4u.prasanthkumar.bakingapp.model.Ingredients;
 import com.kpcode4u.prasanthkumar.bakingapp.model.RecipesResponse;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -48,9 +49,15 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipesInf
 
     @Override
     public void onBindViewHolder(RecipesInfo holder, final int position) {
-        holder.imageView.setImageResource(img[position]);
+       // holder.imageView.setImageResource(img[position]);
         holder.recipeTitle.setText(recipesList.get(position).getName());
         holder.videos_count_tv.setText(""+recipesList.get(position).getSteps().size()+" Videos");
+
+        if (recipesList.get(position).getImage().contentEquals("")){
+            holder.imageView.setImageResource(img[position]);
+        } else {
+            Picasso.with(context).load(recipesList.get(position).getImage()).centerCrop().placeholder(R.mipmap.ic_launcher).into(holder.imageView);
+        }
 
     }
 

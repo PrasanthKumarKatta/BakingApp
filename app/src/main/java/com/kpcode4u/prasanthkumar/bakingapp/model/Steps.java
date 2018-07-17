@@ -22,11 +22,14 @@ public class Steps implements Serializable, Parcelable {
 
     private String videoURL;
 
-    public Steps(Integer id, String shortDescription, String description, String videoURL) {
+    private String thumbnailURL;
+
+    public Steps(Integer id, String shortDescription, String description, String videoURL, String thumbnailURL) {
         this.id = id;
         this.shortDescription = shortDescription;
         this.description = description;
         this.videoURL = videoURL;
+        this.thumbnailURL = thumbnailURL;
     }
 
     protected Steps(Parcel in) {
@@ -100,5 +103,17 @@ public class Steps implements Serializable, Parcelable {
         dest.writeString(shortDescription);
         dest.writeString(description);
         dest.writeString(videoURL);
+    }
+
+    public String getThumbnailURL() {
+        return thumbnailURL;
+    }
+
+    public void setThumbnailURL(String thumbnailURL) {
+        this.thumbnailURL = thumbnailURL;
+    }
+
+    public static Creator<Steps> getCREATOR() {
+        return CREATOR;
     }
 }

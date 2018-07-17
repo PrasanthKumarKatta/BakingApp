@@ -7,4 +7,7 @@
     <string name="ingredientsKey">IngredientsKey</string>
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
+    <string name="permissions">Need Internet Permissions</string>
+    <string name="error_dialog_internet">No Internet Connection!</string>
+    <string name="goto_settings_positive_btn">Go to Settings</string>
 </resources>

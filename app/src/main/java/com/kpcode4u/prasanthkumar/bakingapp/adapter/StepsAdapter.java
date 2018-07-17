@@ -113,7 +113,6 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsInfo> {
                                 .commit();
 
 
-
                     } else {
                         Context context = v.getContext();
                         //Intent i = new Intent(context, ExoPlayerActivity.class);
