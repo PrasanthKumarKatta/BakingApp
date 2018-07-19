@@ -10,7 +10,6 @@ import android.widget.TextView;
 import com.kpcode4u.prasanthkumar.bakingapp.R;
 import com.kpcode4u.prasanthkumar.bakingapp.model.Ingredients;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -32,7 +31,7 @@ public class Ingredientsadapter extends RecyclerView.Adapter<Ingredientsadapter.
 
     @Override
     public IngredientInfo onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(context).inflate(R.layout.ingredientd_row,parent,false);
+        View v = LayoutInflater.from(context).inflate(R.layout.ingredients_row,parent,false);
         return new IngredientInfo(v);
     }
 

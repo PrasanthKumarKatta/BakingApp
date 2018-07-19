@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 
 import com.kpcode4u.prasanthkumar.bakingapp.HomeWidget.BakingAppWidget;
 import com.kpcode4u.prasanthkumar.bakingapp.R;
+import com.kpcode4u.prasanthkumar.bakingapp.adapter.Ingredientsadapter;
 import com.kpcode4u.prasanthkumar.bakingapp.adapter.StepsAdapter;
 
 import com.kpcode4u.prasanthkumar.bakingapp.model.Ingredients;
@@ -58,13 +60,13 @@ public class ItemListActivity extends AppCompatActivity {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @BindView(R.id.item_list)
-    RecyclerView recyclerView;
+    @BindView(R.id.item_list) RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_list);
+
         ButterKnife.bind(this);
 
         setSupportActionBar(toolbar);
@@ -74,10 +76,10 @@ public class ItemListActivity extends AppCompatActivity {
         }
 
         getRecipseSteps();
-
         assert recyclerView != null;
         setupRecyclerView(recyclerView);
     }
+
 
     private void getRecipseSteps() {
 
@@ -127,6 +129,7 @@ public class ItemListActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
             });
+
         }
     }
 

@@ -226,7 +226,7 @@ public class ItemDetailFragment extends Fragment implements ExoPlayer.EventListe
                         callexoplayer();
 
                         vId = stepsVideoList.get(position).getId();
-                        totalVideoSteps = stepsVideoList.size() - 1;
+                        totalVideoSteps = stepsVideoList.size()-1;
                         totalSteps.setText(vId + "/" + totalVideoSteps);
 
                     } else {
@@ -262,7 +262,7 @@ public class ItemDetailFragment extends Fragment implements ExoPlayer.EventListe
                         callexoplayer();
 
                         vId = stepsVideoList.get(position).getId();
-                        totalVideoSteps = stepsVideoList.size() - 1;
+                        totalVideoSteps = stepsVideoList.size()-1;
                         totalSteps.setText(vId + "/" + totalVideoSteps);
 
                     }
