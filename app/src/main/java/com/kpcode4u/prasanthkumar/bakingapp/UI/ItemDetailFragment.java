@@ -192,8 +192,6 @@ public class ItemDetailFragment extends Fragment implements ExoPlayer.EventListe
             totalVideoSteps = stepsVideoList.size() - 1;
             totalSteps.setText(vId + "/" + totalVideoSteps);
 
-            hideUnhideExo();
-
             if (!stepsVideoList.get(position).getVideoURL().contentEquals("")) {
                 videoURL = stepsVideoList.get(position).getVideoURL();
                 exoPlayerView.setVisibility(View.VISIBLE);
@@ -215,6 +213,7 @@ public class ItemDetailFragment extends Fragment implements ExoPlayer.EventListe
                 @Override
                 public void onClick(View v) {
                     releasePlayer();
+                    callexoplayer();
                     if (position >= 1) {
                         next.setVisibility(View.VISIBLE);
                         position--;
@@ -231,8 +230,8 @@ public class ItemDetailFragment extends Fragment implements ExoPlayer.EventListe
                         totalSteps.setText(vId + "/" + totalVideoSteps);
 
                     } else {
-                        Toast.makeText(getActivity(), "This is the First Step", Toast.LENGTH_SHORT).show();
                         previous.setVisibility(View.INVISIBLE);
+                        Toast.makeText(getActivity(), "This is the First Step", Toast.LENGTH_SHORT).show();
 
                     }
 
@@ -243,20 +242,22 @@ public class ItemDetailFragment extends Fragment implements ExoPlayer.EventListe
                 @Override
                 public void onClick(View v) {
                      releasePlayer();
+                     callexoplayer();
 
-                    if (position == stepsVideoList.size() - 1) {
+                    if (position == totalVideoSteps) {
                         Toast.makeText(getActivity(), "This is the Last Step", Toast.LENGTH_SHORT).show();
                         next.setVisibility(View.INVISIBLE);
                         previous.setVisibility(View.VISIBLE);
 
                     } else {
+                        previous.setVisibility(View.VISIBLE);
                         next.setVisibility(View.VISIBLE);
                         position++;
                         videoURL = stepsVideoList.get(position).getVideoURL();
                         description = stepsVideoList.get(position).getDescription();
                         descriptionTv.setText(description);
                         hideUnhideExo();
-                       // exoPlayer.stop();
+                      //  exoPlayer.stop();
                         exoPlayer.seekTo(0);
                         callexoplayer();
 
@@ -307,17 +308,20 @@ public class ItemDetailFragment extends Fragment implements ExoPlayer.EventListe
     private void callexoplayer() {
         try {
 
+            BandwidthMeter bandwidthMeter = new DefaultBandwidthMeter();
+            TrackSelector trackSelector = new DefaultTrackSelector(new AdaptiveTrackSelection.Factory(bandwidthMeter));
+            LoadControl loadControl = new DefaultLoadControl();
+
+            if (exoPlayer == null) {
+                exoPlayer = ExoPlayerFactory.newSimpleInstance(getActivity(), trackSelector, loadControl);
+            }
+
             if (exoPlayer != null) {
 
                 if (videoURL.equals("")) {
                     Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.recipes);
                     exoPlayerView.setDefaultArtwork(bitmap);
                 }
-
-                BandwidthMeter bandwidthMeter = new DefaultBandwidthMeter();
-                TrackSelector trackSelector = new DefaultTrackSelector(new AdaptiveTrackSelection.Factory(bandwidthMeter));
-                LoadControl loadControl = new DefaultLoadControl();
-                exoPlayer = ExoPlayerFactory.newSimpleInstance(getActivity(), trackSelector, loadControl);
 
                 exoPlayer.addListener(this);
 
@@ -367,7 +371,8 @@ public class ItemDetailFragment extends Fragment implements ExoPlayer.EventListe
         if (exoPlayer != null) {
             playerStopPosition = exoPlayer.getCurrentPosition();
         }
-        if (Util.SDK_INT <= 23) {
+
+        if (Util.SDK_INT <=23){
             releasePlayer();
         }
     }
@@ -383,6 +388,7 @@ public class ItemDetailFragment extends Fragment implements ExoPlayer.EventListe
     /*
      * Release Player
      */
+
     private void releasePlayer() {
         if (exoPlayer != null) {
             exoPlayer.stop();
@@ -390,7 +396,6 @@ public class ItemDetailFragment extends Fragment implements ExoPlayer.EventListe
             exoPlayer = null;
         }
     }
-
     private void hideUnhideExo() {
         if (TextUtils.isEmpty(videoURL)) {
             exoPlayerView.setVisibility(View.INVISIBLE);
