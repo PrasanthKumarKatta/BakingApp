@@ -352,7 +352,6 @@ public class ItemDetailFragment extends Fragment implements ExoPlayer.EventListe
 
     }
 
-
     @Override
     public void onStop() {
         super.onStop();
@@ -360,7 +359,6 @@ public class ItemDetailFragment extends Fragment implements ExoPlayer.EventListe
             playerStopPosition = exoPlayer.getCurrentPosition();
             stopPlay = true;
             releasePlayer();
-
         }
     }
 
@@ -384,11 +382,9 @@ public class ItemDetailFragment extends Fragment implements ExoPlayer.EventListe
             callexoplayer();
         }
     }
-
     /*
      * Release Player
      */
-
     private void releasePlayer() {
         if (exoPlayer != null) {
             exoPlayer.stop();
@@ -396,6 +392,7 @@ public class ItemDetailFragment extends Fragment implements ExoPlayer.EventListe
             exoPlayer = null;
         }
     }
+
     private void hideUnhideExo() {
         if (TextUtils.isEmpty(videoURL)) {
             exoPlayerView.setVisibility(View.INVISIBLE);

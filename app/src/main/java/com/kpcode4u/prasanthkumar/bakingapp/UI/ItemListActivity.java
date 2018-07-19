@@ -46,25 +46,17 @@ public class ItemListActivity extends AppCompatActivity {
     private static final String recipeNameKey = "recipeNameKey";
     private static final String stepsKey = "stepsKey";
 
-
     @BindView(R.id.ingredients_textView) TextView ingredientTextView;
 
-    private StepsAdapter mStepsAdapter;
-    private ArrayList<RecipesResponse> mRecipeList;
     private ArrayList<Steps> mStepsList;
     private ArrayList<Ingredients> mIngredientsList;
     private int position;
     private String recipeName;
-    private String ingredient_Name,ingredients_Measure,ingredients_Quantity;
-
 
     private boolean mTwoPane;
-    private ItemListActivity mContext;
 
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.item_list) RecyclerView recyclerView;
-  //  @BindView(R.id.item_list) StatefullRecyclerView recyclerView;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,24 +107,11 @@ public class ItemListActivity extends AppCompatActivity {
             editor.putString("widget_List",line);
             editor.apply();
 
-
             Intent i = new Intent(this, BakingAppWidget.class);
             i.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
             int[] id_List = AppWidgetManager.getInstance(getApplicationContext()).getAppWidgetIds(new ComponentName(getApplication(), BakingAppWidget.class));
             i.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS,id_List);
             sendBroadcast(i);
-
-/*
-            //Widget
-            Intent broadCastIntent = new Intent(getApplicationContext(),BakingWidget.class);
-            broadCastIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-            broadCastIntent.putParcelableArrayListExtra(ingredientsKey,mIngredientsList);
-            broadCastIntent.putExtra(recipeNameKey, recipeName);
-            int[] id_List = AppWidgetManager.getInstance(getApplicationContext()).getAppWidgetIds(new ComponentName(getApplication(), BakingAppWidget.class));
-            broadCastIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS,id_List);
-
-            getApplicationContext().sendBroadcast(broadCastIntent);
-*/
 
             ingredientTextView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -144,12 +123,9 @@ public class ItemListActivity extends AppCompatActivity {
                     intent.putExtra(recipeNameKey,recipeName);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
-                    
                 }
             });
-
         }
-
     }
 
     @Override
@@ -164,7 +140,7 @@ public class ItemListActivity extends AppCompatActivity {
 
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
         recyclerView.setAdapter(new StepsAdapter(ItemListActivity.this, mIngredientsList ,mStepsList,recipeName, mTwoPane));
-   //   recyclerView.scrollToPosition(position);
+        recyclerView.scrollToPosition(position);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
@@ -192,7 +168,6 @@ public class ItemListActivity extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-
 
         position = ((LinearLayoutManager)recyclerView.getLayoutManager()).findFirstVisibleItemPosition();
         outState.putInt(SAVED_LAYOUT_MANAGER, position);
