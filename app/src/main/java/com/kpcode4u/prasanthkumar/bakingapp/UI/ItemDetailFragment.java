@@ -367,6 +367,9 @@ public class ItemDetailFragment extends Fragment implements ExoPlayer.EventListe
         if (exoPlayer != null) {
             playerStopPosition = exoPlayer.getCurrentPosition();
         }
+        if (Util.SDK_INT <= 23) {
+            releasePlayer();
+        }
     }
 
     @Override

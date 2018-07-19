@@ -67,6 +67,7 @@ public class RecipesMainActivity extends AppCompatActivity {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle(R.string.permissions);
             builder.setMessage(R.string.error_dialog_internet);
+            builder.setIcon(R.drawable.ic_sentiment_dissatisfied_black_24dp);
             builder.setPositiveButton(getString(R.string.goto_settings_positive_btn), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,14 +49,13 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipesInf
 
     @Override
     public void onBindViewHolder(RecipesInfo holder, final int position) {
-       // holder.imageView.setImageResource(img[position]);
         holder.recipeTitle.setText(recipesList.get(position).getName());
         holder.videos_count_tv.setText(""+recipesList.get(position).getSteps().size()+" Videos");
 
-        if (recipesList.get(position).getImage().contentEquals("")){
-            holder.imageView.setImageResource(img[position]);
-        } else {
+        if (!TextUtils.isEmpty(recipesList.get(position).getImage())){
             Picasso.with(context).load(recipesList.get(position).getImage()).centerCrop().placeholder(R.mipmap.ic_launcher).into(holder.imageView);
+        } else {
+            holder.imageView.setImageResource(img[position]);
         }
     }
 
@@ -67,7 +67,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipesInf
         return recipesList.size();
     }
 
-    public class RecipesInfo extends RecyclerView.ViewHolder /*implements View.OnClickListener*/ {
+    public class RecipesInfo extends RecyclerView.ViewHolder  {
 
         @BindView(R.id.recipe_title_id) TextView recipeTitle;
         @BindView(R.id.cake_img_id) ImageView imageView;
@@ -83,7 +83,6 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipesInf
                     int pos = getAdapterPosition();
                     if (pos != RecyclerView.NO_POSITION){
 
-                       // Intent intent = new Intent(context, RecipseDetailsActivity.class);
                         Intent intent = new Intent(context, ItemListActivity.class);
 
                         Bundle bundle = new Bundle();
