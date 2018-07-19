@@ -12,37 +12,41 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".RecipesMainActivity">
+        <activity android:name=".UI.RecipesMainActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".IngredientsListActivity"
-            android:launchMode="singleTop">
+        <activity android:name=".UI.IngredientsListActivity"
+            android:launchMode="singleTop"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
+            >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.kpcode4u.prasanthkumar.bakingapp.ItemListActivity" />
+                android:value="com.kpcode4u.prasanthkumar.bakingapp.UI.ItemListActivity" />
         </activity>
         <activity
-            android:name=".ItemListActivity"
+            android:name=".UI.ItemListActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:launchMode="singleTop"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
             >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.kpcode4u.prasanthkumar.bakingapp.RecipesMainActivity" />
+                android:value="com.kpcode4u.prasanthkumar.bakingapp.UI.RecipesMainActivity" />
         </activity>
         <activity
-            android:name=".ItemDetailActivity"
+            android:name=".UI.ItemDetailActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
             >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.kpcode4u.prasanthkumar.bakingapp.ItemListActivity" />
+                android:value="com.kpcode4u.prasanthkumar.bakingapp.UI.ItemListActivity" />
         </activity>
 
         <service
@@ -51,7 +55,7 @@
             android:exported="true"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
 
-        <receiver android:name=".BakingAppWidget">
+        <receiver android:name=".HomeWidget.BakingAppWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>

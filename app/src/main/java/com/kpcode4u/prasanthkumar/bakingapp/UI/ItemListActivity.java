@@ -1,26 +1,20 @@
-package com.kpcode4u.prasanthkumar.bakingapp;
+package com.kpcode4u.prasanthkumar.bakingapp.UI;
 
 import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.kpcode4u.prasanthkumar.bakingapp.HomeWidget.BakingAppWidget;
+import com.kpcode4u.prasanthkumar.bakingapp.R;
 import com.kpcode4u.prasanthkumar.bakingapp.adapter.StepsAdapter;
 
 import com.kpcode4u.prasanthkumar.bakingapp.model.Ingredients;
@@ -28,7 +22,6 @@ import com.kpcode4u.prasanthkumar.bakingapp.model.RecipesResponse;
 import com.kpcode4u.prasanthkumar.bakingapp.model.Steps;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -61,7 +54,6 @@ public class ItemListActivity extends AppCompatActivity {
     private ArrayList<Steps> mStepsList;
     private ArrayList<Ingredients> mIngredientsList;
     private int position;
-    String recipseIngredients;
     private String recipeName;
     private String ingredient_Name,ingredients_Measure,ingredients_Quantity;
 
@@ -70,8 +62,8 @@ public class ItemListActivity extends AppCompatActivity {
     private ItemListActivity mContext;
 
     @BindView(R.id.toolbar) Toolbar toolbar;
-//    @BindView(R.id.item_list) RecyclerView recyclerView;
-    @BindView(R.id.item_list) StatefullRecyclerView recyclerView;
+    @BindView(R.id.item_list) RecyclerView recyclerView;
+  //  @BindView(R.id.item_list) StatefullRecyclerView recyclerView;
 
 
     @Override
@@ -149,7 +141,7 @@ public class ItemListActivity extends AppCompatActivity {
                     Intent intent = new Intent(ItemListActivity.this,IngredientsListActivity.class);
 
                     intent.putParcelableArrayListExtra(ingredientsKey,mIngredientsList);
-                    intent.putParcelableArrayListExtra(stepsKey,mStepsList);
+                    intent.putExtra(recipeNameKey,recipeName);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                     
@@ -170,7 +162,7 @@ public class ItemListActivity extends AppCompatActivity {
         finish();
     }
 
-    private void setupRecyclerView(@NonNull StatefullRecyclerView recyclerView) {
+    private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
         recyclerView.setAdapter(new StepsAdapter(ItemListActivity.this, mIngredientsList ,mStepsList,recipeName, mTwoPane));
    //   recyclerView.scrollToPosition(position);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -197,35 +189,24 @@ public class ItemListActivity extends AppCompatActivity {
         setupRecyclerView( recyclerView);
     }
 
-  /*  @Override
+    @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
 
         position = ((LinearLayoutManager)recyclerView.getLayoutManager()).findFirstVisibleItemPosition();
         outState.putInt(SAVED_LAYOUT_MANAGER, position);
-*//*
-         outState.putString("title",mRecipeList.get(position).getName());
-         outState.putParcelableArrayList("ingredientsList",mIngredientsList);
-         outState.putParcelableArrayList("stepsKey",mStepsList);
-         outState.putBoolean("mTwo",mTwoPane);
-*//*
+
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
 
-     *//*   recipeName = savedInstanceState.getString(recipeNameKey);
-        mIngredientsList = savedInstanceState.getParcelableArrayList(ingredientsKey);
-        mStepsList = savedInstanceState.getParcelableArrayList(stepsKey);
-        mTwoPane = savedInstanceState.getBoolean("mtwo");
-*//*
         if (savedInstanceState != null){
             position = savedInstanceState.getInt(SAVED_LAYOUT_MANAGER);
         }
         super.onRestoreInstanceState(savedInstanceState);
     }
 
-*/
 }

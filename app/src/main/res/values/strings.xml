@@ -10,4 +10,6 @@
     <string name="permissions">Need Internet Permissions</string>
     <string name="error_dialog_internet">No Internet Connection!</string>
     <string name="goto_settings_positive_btn">Go to Settings</string>
+    <string name="next_button">Next</string>
+    <string name="previous_button">Previous</string>
 </resources>

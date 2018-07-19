@@ -1,4 +1,4 @@
-package com.kpcode4u.prasanthkumar.bakingapp;
+package com.kpcode4u.prasanthkumar.bakingapp.UI;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -20,11 +20,11 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.kpcode4u.prasanthkumar.bakingapp.Internet.InternetConnectivity;
+import com.kpcode4u.prasanthkumar.bakingapp.R;
 import com.kpcode4u.prasanthkumar.bakingapp.adapter.RecipeAdapter;
 import com.kpcode4u.prasanthkumar.bakingapp.api.Client;
 import com.kpcode4u.prasanthkumar.bakingapp.api.Service;
 import com.kpcode4u.prasanthkumar.bakingapp.model.RecipesResponse;
-import com.kpcode4u.prasanthkumar.bakingapp.model.Steps;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -107,7 +107,6 @@ public class RecipesMainActivity extends AppCompatActivity {
             call.enqueue(new Callback<List<RecipesResponse>>() {
                 @Override
                 public void onResponse(Call<List<RecipesResponse>> call, Response<List<RecipesResponse>> response) {
-                    //List<RecipesResponse> responseList = response;
 
                     List<RecipesResponse> recipesList = response.body();
                     recyclerView.setAdapter(new RecipeAdapter(getApplicationContext(), (ArrayList<RecipesResponse>) recipesList,img));

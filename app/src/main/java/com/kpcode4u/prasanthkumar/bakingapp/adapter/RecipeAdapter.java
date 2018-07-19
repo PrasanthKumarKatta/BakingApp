@@ -3,7 +3,6 @@ package com.kpcode4u.prasanthkumar.bakingapp.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.kpcode4u.prasanthkumar.bakingapp.ItemListActivity;
+import com.kpcode4u.prasanthkumar.bakingapp.UI.ItemListActivity;
 import com.kpcode4u.prasanthkumar.bakingapp.R;
 import com.kpcode4u.prasanthkumar.bakingapp.model.Ingredients;
 import com.kpcode4u.prasanthkumar.bakingapp.model.RecipesResponse;

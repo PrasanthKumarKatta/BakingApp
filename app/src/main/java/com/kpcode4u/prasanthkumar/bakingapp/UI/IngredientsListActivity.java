@@ -1,4 +1,4 @@
-package com.kpcode4u.prasanthkumar.bakingapp;
+package com.kpcode4u.prasanthkumar.bakingapp.UI;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
+import com.kpcode4u.prasanthkumar.bakingapp.R;
 import com.kpcode4u.prasanthkumar.bakingapp.adapter.Ingredientsadapter;
 import com.kpcode4u.prasanthkumar.bakingapp.model.Ingredients;
 
@@ -23,12 +24,11 @@ public class IngredientsListActivity extends AppCompatActivity {
     ArrayList<Ingredients> ingredientsList;
     private static final String ingredientsKey = "ingredientsKey";
     private static final String recipeNameKey = "recipeNameKey";
-    private static final String stepsKey = "stepsKey";
-
 
     private Ingredientsadapter ingredientsadapter;
     private int position;
     private String SAVED_LAYOUT_MANAGER = "SavedLayoutManager";
+    private String recipeName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +40,7 @@ public class IngredientsListActivity extends AppCompatActivity {
         if (savedInstanceState ==null){
             getIngredientsData();
         }
+        setTitle("Ingredients: "+recipeName);
 
     }
 
@@ -49,6 +50,8 @@ public class IngredientsListActivity extends AppCompatActivity {
         Intent i=getIntent();
 
             ingredientsList = getIntent().getParcelableArrayListExtra(ingredientsKey);
+            recipeName = getIntent().getExtras().getString(recipeNameKey);
+
         //Toast.makeText(this, ""+ingredientsList.size(), Toast.LENGTH_SHORT).show();
 
         ingredientsadapter = new Ingredientsadapter(this,ingredientsList);
@@ -64,10 +67,10 @@ public class IngredientsListActivity extends AppCompatActivity {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        Intent i=getIntent();
+        /*Intent i=getIntent();
         ingredientsList = getIntent().getParcelableArrayListExtra(ingredientsKey);
         outState.putParcelableArrayList(ingredientsKey,ingredientsList);
-
+*/
         position = ((LinearLayoutManager)mRecyclerView.getLayoutManager()).findFirstVisibleItemPosition();
         outState.putInt(SAVED_LAYOUT_MANAGER, position);
 
@@ -77,7 +80,7 @@ public class IngredientsListActivity extends AppCompatActivity {
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
 
         if (savedInstanceState != null){
-            ingredientsList = savedInstanceState.getParcelableArrayList(ingredientsKey);
+           // ingredientsList = savedInstanceState.getParcelableArrayList(ingredientsKey);
             position = savedInstanceState.getInt(SAVED_LAYOUT_MANAGER);
         }
         super.onRestoreInstanceState(savedInstanceState);

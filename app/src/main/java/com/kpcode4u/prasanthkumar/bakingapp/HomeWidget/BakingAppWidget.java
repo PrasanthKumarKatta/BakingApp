@@ -1,4 +1,4 @@
-package com.kpcode4u.prasanthkumar.bakingapp;
+package com.kpcode4u.prasanthkumar.bakingapp.HomeWidget;
 
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
@@ -7,6 +7,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.widget.RemoteViews;
+
+import com.kpcode4u.prasanthkumar.bakingapp.R;
+import com.kpcode4u.prasanthkumar.bakingapp.UI.RecipesMainActivity;
 
 import static android.content.Context.MODE_PRIVATE;
 

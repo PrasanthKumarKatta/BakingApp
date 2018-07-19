@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/mainContent_swipeRef"
-    tools:context="com.kpcode4u.prasanthkumar.bakingapp.RecipesMainActivity">
+    tools:context="com.kpcode4u.prasanthkumar.bakingapp.UI.RecipesMainActivity">
 
     <include layout="@layout/content_main"/>
 

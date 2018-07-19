@@ -9,9 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.kpcode4u.prasanthkumar.bakingapp.ItemDetailActivity;
-import com.kpcode4u.prasanthkumar.bakingapp.ItemDetailFragment;
-import com.kpcode4u.prasanthkumar.bakingapp.ItemListActivity;
+import com.kpcode4u.prasanthkumar.bakingapp.UI.ItemDetailActivity;
+import com.kpcode4u.prasanthkumar.bakingapp.UI.ItemDetailFragment;
+import com.kpcode4u.prasanthkumar.bakingapp.UI.ItemListActivity;
 import com.kpcode4u.prasanthkumar.bakingapp.R;
 import com.kpcode4u.prasanthkumar.bakingapp.model.Ingredients;
 import com.kpcode4u.prasanthkumar.bakingapp.model.Steps;
