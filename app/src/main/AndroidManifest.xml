@@ -41,19 +41,13 @@
         </activity>
         <activity
             android:name=".UI.ItemDetailActivity"
-            android:theme="@style/AppTheme.NoActionBar"
+            android:theme="@style/AppTheme"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
             >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.kpcode4u.prasanthkumar.bakingapp.UI.ItemListActivity" />
         </activity>
-
-        <service
-            android:name=".service.MyWidgetRemoteViewService"
-            android:enabled="true"
-            android:exported="true"
-            android:permission="android.permission.BIND_REMOTEVIEWS" />
 
         <receiver android:name=".HomeWidget.BakingAppWidget">
             <intent-filter>

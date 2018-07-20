@@ -34,7 +34,6 @@ public class ItemDetailActivity extends AppCompatActivity {
   private ArrayList<Steps> stepsVideoList;
   private ArrayList<Ingredients> ingredientsList;
   private int position;
-  @BindView(R.id.toolbar) Toolbar toolbar;
   private String recipse;
 
     @Override
@@ -45,16 +44,11 @@ public class ItemDetailActivity extends AppCompatActivity {
         stepsVideoList = new ArrayList<>();
         ingredientsList = new ArrayList<>();
 
-        /*
-        Toolbar toolbar = (Toolbar) findViewById(R.id.detail_toolbar);
-        setSupportActionBar(toolbar);
-        */
         // Show the Up button in the action bar.
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
-
 
         if (savedInstanceState == null) {
             // Create the detail fragment and add it to the activity

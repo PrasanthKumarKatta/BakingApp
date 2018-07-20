@@ -33,36 +33,28 @@
                 style="@style/recipes_cardview"
                 android:layout_margin="5dp"
                 app:cardCornerRadius="5dp">
-                  <TextView
-                        android:id="@+id/ingredients_textView"
-                        style="@style/recipes_cardview"
-                        android:layout_gravity="center"
-                        android:background="@drawable/shape_ingredients"
-                        android:padding="20dp"
-                        android:paddingLeft="20dp"
-                        android:text="Ingredients List"
-                        android:textSize="25sp"
-                        android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/ingredients_textView"
+                    style="@style/recipes_cardview"
+                    android:layout_gravity="center"
+                    android:background="@drawable/shape_ingredients"
+                    android:padding="20dp"
+                    android:paddingLeft="20dp"
+                    android:text="Ingredients List"
+                    android:textSize="25sp"
+                    android:textStyle="bold" />
 
             </android.support.v7.widget.CardView>
         </android.support.v4.widget.NestedScrollView>
-        <TextView
-            style="@style/recipes_cardview"
-            android:layout_gravity="center"
-            android:background="@drawable/shape_ingredients"
-            android:padding="20dp"
-            android:paddingLeft="20dp"
-            android:text="Steps"
-            android:textSize="25sp"
-            android:textStyle="bold" />
 
         <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-              <android.support.v7.widget.RecyclerView
-                    android:id="@+id/item_list"
-                    style="@style/recipes_cardview"
-                    />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/item_list"
+                style="@style/recipes_cardview" />
 
         </android.support.v4.widget.NestedScrollView>
     </LinearLayout>

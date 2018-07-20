@@ -1,9 +1,14 @@
 package com.kpcode4u.prasanthkumar.bakingapp.UI;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
@@ -44,19 +49,32 @@ public class IngredientsListActivity extends AppCompatActivity {
 
     }
 
+
+    public Activity getActivity() {
+        Context context = this;
+        while (context instanceof ContextWrapper){
+            if (context instanceof Activity){
+                return (Activity) context;
+            }
+            context = ((ContextWrapper) context).getBaseContext();
+        }
+        return null;
+    }
+
     private void getIngredientsData() {
         //ingredientsList = new ArrayList<>();
 
         Intent i=getIntent();
 
-            ingredientsList = getIntent().getParcelableArrayListExtra(ingredientsKey);
-            recipeName = getIntent().getExtras().getString(recipeNameKey);
-
-        //Toast.makeText(this, ""+ingredientsList.size(), Toast.LENGTH_SHORT).show();
-
+        ingredientsList = getIntent().getParcelableArrayListExtra(ingredientsKey);
+        recipeName = getIntent().getExtras().getString(recipeNameKey);
         ingredientsadapter = new Ingredientsadapter(this,ingredientsList);
         mRecyclerView.setAdapter(ingredientsadapter);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        if (getActivity().getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
+            mRecyclerView.setLayoutManager(new GridLayoutManager(this,1));
+        } else {
+            mRecyclerView.setLayoutManager(new GridLayoutManager(this,2));
+        }
         mRecyclerView.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
         mRecyclerView.scrollToPosition(position);
         ingredientsadapter.notifyDataSetChanged();

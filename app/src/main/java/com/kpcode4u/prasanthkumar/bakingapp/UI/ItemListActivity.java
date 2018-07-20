@@ -103,7 +103,7 @@ public class ItemListActivity extends AppCompatActivity {
             int count = 1;
             for (int i = 0; i < mIngredientsList.size(); i++) {
 
-                stringBuffer.append(count + "" + mIngredientsList.get(i).getIngredient() + "-" +
+                stringBuffer.append(""+count + ". " + mIngredientsList.get(i).getIngredient() + "-" +
                         mIngredientsList.get(i).getQuantity() + mIngredientsList.get(i).getMeasure() + "\n");
                 count++;
             }
