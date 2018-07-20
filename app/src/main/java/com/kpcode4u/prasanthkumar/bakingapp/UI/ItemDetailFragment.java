@@ -290,7 +290,7 @@ public class ItemDetailFragment extends Fragment{
         }
     }
 
-    @Override
+   /* @Override
     public void onPause() {
         super.onPause();
         playWhenReady = exoPlayer.getPlayWhenReady();
@@ -302,13 +302,15 @@ public class ItemDetailFragment extends Fragment{
             releasePlayer();
         }
     }
+    */
 
     @Override
     public void onResume() {
         super.onResume();
-        if (exoPlayer != null) {
+       /* if (exoPlayer != null) {
             playerStopPosition = exoPlayer.getCurrentPosition();
         }
+        */
         if (Util.SDK_INT <= 23 || exoPlayer == null){
             callexoplayer();
         }
