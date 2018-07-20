@@ -53,16 +53,12 @@ public class RecipesMainActivity extends AppCompatActivity {
 
         checkInternet();
 
-        /*img = new int[]{R.drawable.nutralla_pie, R.drawable.brownies, R.drawable.yellow_cake, R.drawable.cheesecake};
-
-        initViews();*/
     }
 
     private void checkInternet() {
         if (InternetConnectivity.isNetworkAvailable(getApplicationContext())){
             img = new int[]{R.drawable.nutralla_pie, R.drawable.brownies, R.drawable.yellow_cake, R.drawable.cheesecake};
             initViews();
-           //getRecipses();
         } else {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle(R.string.permissions);
@@ -130,7 +126,6 @@ public class RecipesMainActivity extends AppCompatActivity {
             Toast.makeText(this, ""+e.toString(), Toast.LENGTH_SHORT).show();
         }
 
-      //  initViews();
     }
 
     private void initViews() {

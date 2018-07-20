@@ -290,27 +290,10 @@ public class ItemDetailFragment extends Fragment{
         }
     }
 
-   /* @Override
-    public void onPause() {
-        super.onPause();
-        playWhenReady = exoPlayer.getPlayWhenReady();
-        if (exoPlayer != null) {
-            playerStopPosition = exoPlayer.getCurrentPosition();
-        }
-
-        if (Util.SDK_INT <= 23) {
-            releasePlayer();
-        }
-    }
-    */
-
     @Override
     public void onResume() {
         super.onResume();
-       /* if (exoPlayer != null) {
-            playerStopPosition = exoPlayer.getCurrentPosition();
-        }
-        */
+
         if (Util.SDK_INT <= 23 || exoPlayer == null){
             callexoplayer();
         }
@@ -322,17 +305,19 @@ public class ItemDetailFragment extends Fragment{
         super.onStop();
         if (Util.SDK_INT > 23) {
             if (exoPlayer != null){
-            playerStopPosition = exoPlayer.getCurrentPosition();
-            stopPlay = true;
-            releasePlayer();
-            }
+                playerStopPosition = exoPlayer.getCurrentPosition();
+                stopPlay = true;
+                releasePlayer();
+                }
         }
     }
     /*
      * Release Player
      */
-    private void releasePlayer() {
-        if (exoPlayer != null) {
+    private void releasePlayer()
+    {
+        if (exoPlayer != null)
+        {
             exoPlayer.stop();
             exoPlayer.release();
             exoPlayer = null;
@@ -340,7 +325,8 @@ public class ItemDetailFragment extends Fragment{
     }
 
     @Override
-    public void onDestroy() {
+    public void onDestroy()
+    {
         super.onDestroy();
         releasePlayer();
     }
