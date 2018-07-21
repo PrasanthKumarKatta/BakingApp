@@ -293,17 +293,21 @@ public class ItemDetailFragment extends Fragment{
     @Override
     public void onResume() {
         super.onResume();
-        /* if (exoPlayer != null) {
+         /*if (exoPlayer != null)
+         {
             playerStopPosition = exoPlayer.getCurrentPosition();
-        }*/
+         }*/
         if ((Util.SDK_INT <= 23 || exoPlayer == null))
         {
             callexoplayer();
+            exoPlayer.seekTo(playerStopPosition);
+
+            exoPlayer.setPlayWhenReady(playWhenReady);
         }
 
     }
 
-  /*  @Override
+    @Override
         public void onPause() {
             super.onPause();
             playWhenReady = exoPlayer.getPlayWhenReady();
@@ -311,12 +315,11 @@ public class ItemDetailFragment extends Fragment{
                 playerStopPosition = exoPlayer.getCurrentPosition();
                 exoPlayer.stop();
             }
-
-       *//* if (Util.SDK_INT <= 23) {
+/*
+        if (Util.SDK_INT <= 23) {
             releasePlayer();
-        }*//*
+        }*/
     }
-*/
     @Override
     public void onStop() {
         super.onStop();
