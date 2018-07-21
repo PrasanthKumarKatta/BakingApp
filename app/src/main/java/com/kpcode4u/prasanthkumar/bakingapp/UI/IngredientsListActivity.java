@@ -70,11 +70,7 @@ public class IngredientsListActivity extends AppCompatActivity {
         recipeName = getIntent().getExtras().getString(recipeNameKey);
         ingredientsadapter = new Ingredientsadapter(this,ingredientsList);
         mRecyclerView.setAdapter(ingredientsadapter);
-        if (getActivity().getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
-            mRecyclerView.setLayoutManager(new GridLayoutManager(this,1));
-        } else {
-            mRecyclerView.setLayoutManager(new GridLayoutManager(this,2));
-        }
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
         mRecyclerView.scrollToPosition(position);
         ingredientsadapter.notifyDataSetChanged();
@@ -89,7 +85,7 @@ public class IngredientsListActivity extends AppCompatActivity {
         ingredientsList = getIntent().getParcelableArrayListExtra(ingredientsKey);
         outState.putParcelableArrayList(ingredientsKey,ingredientsList);
 */
-        position = ((LinearLayoutManager)mRecyclerView.getLayoutManager()).findFirstVisibleItemPosition();
+        position = ((GridLayoutManager)mRecyclerView.getLayoutManager()).findFirstVisibleItemPosition();
         outState.putInt(SAVED_LAYOUT_MANAGER, position);
 
     }
